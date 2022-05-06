@@ -1,0 +1,28 @@
+{
+    "extends": ["next/core-web-vitals", "prettier"],
+    "plugins": ["unused-imports"],
+    "rules": {
+        "quotes": [
+            "warn",
+            "single",
+            {
+                "avoidEscape": true
+            }
+        ],
+        "semi": ["warn", "always"],
+        "no-var": ["error"],
+        "prefer-const": ["warn"],
+        "jsx-quotes": ["warn", "prefer-double"],
+        "no-unused-vars": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+            "warn",
+            {
+                "vars": "all",
+                "varsIgnorePattern": "^_",
+                "args": "after-used",
+                "argsIgnorePattern": "^_"
+            }
+        ]
+    }
+}
