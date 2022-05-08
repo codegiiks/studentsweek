@@ -2,10 +2,12 @@ import Head from 'next/head';
 import 'styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
-    return (
+    const getLayout = Component.getLayout || ((v) => v);
+
+    return getLayout(
         <>
             <Head>
-                <title>codegiik</title>
+                <title>StudentsWeek</title>
             </Head>
             <Component {...pageProps} />
         </>

@@ -19,3 +19,15 @@ a {
 * {
     box-sizing: border-box;
 }
+
+html {
+    scroll-padding-top: var(--navbar-size);
+}
+
+:root {
+    --navbar-size: calc(5rem);
+
+    @media screen and (min-width: 1024px) {
+        --navbar-size: calc(7rem);
+    }
+}

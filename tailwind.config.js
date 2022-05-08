@@ -46,9 +46,22 @@ module.exports = {
         extend: {},
         colors: {
             ...colors,
+            laurel: {
+                DEFAULT: '#069E00',
+                50: '#5DFF57',
+                100: '#49FF42',
+                200: '#22FF19',
+                300: '#09F000',
+                400: '#08C700',
+                500: '#069E00',
+                600: '#046600',
+                700: '#022E00',
+                800: '#000000',
+                900: '#000000',
+            },
         },
         fontFamily: {
-            sans: ['Poppins', ...defaultFontFamily['sans']],
+            sans: ['Nunito', ...defaultFontFamily['sans']],
             serif: [...defaultFontFamily['serif']],
             mono: [...defaultFontFamily['mono']],
         },

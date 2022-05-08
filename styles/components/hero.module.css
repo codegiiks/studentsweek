@@ -1,0 +1,25 @@
+.wrapper {
+    @apply h-screen overflow-hidden relative -mt-[var(--navbar-size)];
+    @apply flex px-10 lg:px-28;
+
+    .left {
+        @apply text-5xl w-full md:w-2/3 lg:w-1/2;
+        @apply flex items-center;
+
+        h3 {
+            span {
+                @apply font-semibold text-laurel text-4xl tracking-wide;
+                @apply block;
+                @apply cursor-pointer;
+                @apply hover:border-b-2 hover:-mb-[2px] border-laurel-400;
+                @apply w-max;
+            }
+        }
+    }
+
+    .artwork {
+        @apply absolute -right-full md:-right-[230px] lg:right-0 top-0 bottom-0;
+        pointer-events: none;
+        z-index: -1;
+    }
+}

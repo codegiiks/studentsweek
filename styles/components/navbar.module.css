@@ -1,0 +1,25 @@
+.wrapper {
+    @apply sticky top-0 left-0 right-0 h-20 lg:h-28;
+    @apply flex items-center;
+    @apply px-6 lg:px-28;
+    z-index: 9999;
+
+    .logo {
+        @apply mr-auto w-auto h-12;
+        @apply cursor-pointer;
+    }
+
+    .links {
+        @apply flex gap-6 items-center;
+
+        .link {
+            @apply font-semibold text-white hidden lg:block opacity-90 hover:opacity-100;
+        }
+
+        .loginButton {
+            @apply bg-laurel-400 text-white md:bg-white md:text-laurel-600;
+            @apply hover:bg-laurel md:hover:bg-warmGray-100;
+            @apply px-5 py-1 rounded-full;
+        }
+    }
+}
