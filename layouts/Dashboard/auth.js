@@ -17,7 +17,9 @@ export function Auth({ setError }) {
                     provider: 'google',
                 },
                 {
-                    redirectTo: 'http://localhost:3000/dash',
+                    redirectTo: window
+                        ? window.location.href
+                        : process.env.NEXT_PUBLIC_HOST_URL,
                 }
             );
             if (error) throw error;
