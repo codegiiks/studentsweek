@@ -4,7 +4,7 @@
     .wrapper {
         @apply flex flex-col;
         @apply md:w-8/12;
-        @apply pt-10 sm:pt-16;
+        @apply py-10 sm:py-16;
         @apply relative;
 
         .logoutButton {
@@ -34,7 +34,7 @@
 
         h3 {
             @apply font-sans font-bold text-2xl sm:text-3xl;
-            @apply my-1;
+            @apply mt-3 mb-1;
         }
     }
 }

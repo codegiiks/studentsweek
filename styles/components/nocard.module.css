@@ -1,0 +1,18 @@
+.wrapper {
+    @apply cursor-pointer;
+    @apply flex flex-col items-center justify-center;
+    @apply h-24 rounded-md gap-1;
+    @apply border-[1px] border-warmGray-200 border-dashed;
+
+    .desc {
+        @apply opacity-80;
+    }
+
+    .cross {
+        @apply bg-laurel-400 rounded-full p-[3px];
+
+        svg {
+            @apply stroke-current text-white;
+        }
+    }
+}
