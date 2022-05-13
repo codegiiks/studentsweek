@@ -27,6 +27,11 @@
         .button {
             @apply bg-blue-500 text-white hover:bg-blue-600 px-2 py-1 rounded-md text-xl font-sans font-medium tracking-tight;
             @apply mt-4;
+            @apply flex items-center justify-center gap-2;
+
+            svg {
+                @apply h-5 fill-current text-white;
+            }
 
             &:disabled,
             &[disabled] {
