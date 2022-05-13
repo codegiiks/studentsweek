@@ -9,10 +9,10 @@ export function Auth({ setError }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = async (email, password) => {
+    const handleLogin = async () => {
         try {
             setLoading(true);
-            const { user, session, error } = await supabase.auth.signIn(
+            const { error } = await supabase.auth.signIn(
                 {
                     provider: 'google',
                 },
@@ -30,19 +30,6 @@ export function Auth({ setError }) {
         }
     };
 
-    const handleRegister = async (email, password) => {
-        try {
-            setLoading(true);
-            const { error } = await supabase.auth.signUp({ email, password });
-            if (error) throw error;
-            alert('Check your inbox to verify your email');
-        } catch (error) {
-            setError(error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     return (
         <div className={style.auth_wrapper}>
             <Head>
@@ -50,6 +37,9 @@ export function Auth({ setError }) {
             </Head>
             <div className={style.auth_box}>
                 <h1 className={style.header}>Accesso</h1>
+                <p className={style.description}>
+                    Accedi con il tuo account istituzionale
+                </p>
                 <button
                     onClick={(e) => {
                         e.preventDefault();

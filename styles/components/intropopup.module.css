@@ -1,0 +1,32 @@
+.wrapper {
+    @apply fixed inset-0 overflow-hidden;
+    @apply flex flex-col items-center justify-center;
+    @apply bg-black bg-opacity-40;
+    @apply px-5 sm:px-0;
+    @apply z-10;
+
+    .popup {
+        @apply bg-white rounded-md text-center flex flex-col items-center justify-center;
+        @apply py-10 px-3;
+
+        h2 {
+            @apply font-sans font-bold text-3xl;
+        }
+
+        .desc {
+            @apply opacity-40 sm:w-8/12;
+            @apply my-1;
+        }
+
+        select {
+            @apply w-full sm:w-8/12 font-sans font-semibold uppercase text-center;
+            @apply my-2 border-2 border-warmGray-200 rounded-md;
+        }
+
+        .submit {
+            @apply py-2 bg-blue-500 hover:bg-blue-600 px-5 uppercase text-white;
+            @apply mt-2;
+            @apply font-semibold rounded-md;
+        }
+    }
+}

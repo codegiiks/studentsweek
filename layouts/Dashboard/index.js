@@ -3,20 +3,22 @@ import { Auth } from './auth';
 import supabase from 'lib/supabase';
 import Head from 'next/head';
 import { message } from 'react-message-popup';
+import { IntroPopup } from 'components';
 
 import 'styles/layouts/dashboard.index.module.css';
 
 export default function DashboardLayout({ children }) {
     const [session, setSession] = useState(null);
     const [info, setInfo] = useState(null);
+    const [userInfo, setUserInfo] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchInfo = async () => {
-            const info_db = await supabase.from('info').select();
-            if (info_db) {
+            const data = await supabase.from('info').select();
+            if (data) {
                 const tinfo = {};
-                info_db.body.forEach((v, i) => (tinfo[v?.id] = v?.value));
+                data.body.forEach((v, i) => (tinfo[v?.id] = v?.value));
                 setInfo(tinfo);
             }
         };
@@ -37,6 +39,21 @@ export default function DashboardLayout({ children }) {
         console.log(error);
     }, [error]);
 
+    const fetchUserInfo = async () => {
+        const { data } = await supabase
+            .from('users')
+            .select()
+            .eq('email', session?.user?.email);
+
+        console.log(data);
+        if (data?.length == 1) setUserInfo(data[0]);
+        else setUserInfo('notGiven');
+    };
+
+    useEffect(() => {
+        if (session) fetchUserInfo();
+    }, [session]);
+
     const logout = () => {
         supabase.auth.signOut();
     };
@@ -54,6 +71,12 @@ export default function DashboardLayout({ children }) {
                 <title>StudentsWeek - Dashboard</title>
             </Head>
             <Suspense fallback={() => <h2>Waiting</h2>}>
+                <IntroPopup
+                    visible={userInfo == 'notGiven'}
+                    close={(data) => setUserInfo(data)}
+                    classes={info?.CLASSES}
+                    session={session}
+                />
                 {childrenWithProps}
             </Suspense>
             <style jsx global>{`

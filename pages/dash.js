@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { getFullName, getPropic } from 'lib/utils';
 import DashboardLayout from 'layouts/Dashboard';
 
 import style from 'styles/pages/dash.module.css';
@@ -14,18 +15,6 @@ const DAY_NAMES = [
 ];
 
 export default function Dashboard({ session, info, logout }) {
-    const getIdentity = () => {
-        if (session?.user?.identities?.length != 0)
-            return {
-                id: session.user.identities[0].id,
-                ...session.user.identities[0].identity_data,
-            };
-    };
-
-    const getFullName = () => (getIdentity() ? getIdentity().full_name : null);
-
-    const getPropic = () => (getIdentity() ? getIdentity()?.avatar_url : null);
-
     const getDayName = (i) =>
         DAY_NAMES[(new Date(info.DAY_OF_START).getDay() + i - 1) % 7];
 
@@ -51,8 +40,8 @@ export default function Dashboard({ session, info, logout }) {
                     </svg>
                 </button>
                 <h2>
-                    <img className={style.propic} src={getPropic()} />
-                    Hey {getFullName()}{' '}
+                    <img className={style.propic} src={getPropic(session)} />
+                    Hey {getFullName(session)}{' '}
                 </h2>
                 <p className={style.intro}>{info.INTRO_DESC}</p>
                 {Array.from({ length: info.N_OF_DAYS }).map((v, i) => (
