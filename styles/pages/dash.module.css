@@ -8,7 +8,7 @@
         @apply relative;
 
         .logoutButton {
-            @apply absolute top-10 sm:top-16 right-0;
+            @apply ml-auto;
             @apply bg-red-400 hover:bg-red-500;
             @apply px-2 py-1 rounded-md;
             transform: translateY(5px);
@@ -29,7 +29,7 @@
         }
 
         .intro {
-            @apply opacity-50 w-10/12 my-2;
+            @apply opacity-50 sm:w-10/12 my-2;
         }
 
         h3 {
