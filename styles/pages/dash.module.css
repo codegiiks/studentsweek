@@ -1,0 +1,40 @@
+.spacer {
+    @apply flex items-center mx-3 sm:mx-0 sm:justify-center;
+
+    .wrapper {
+        @apply flex flex-col;
+        @apply md:w-8/12;
+        @apply pt-10 sm:pt-16;
+        @apply relative;
+
+        .logoutButton {
+            @apply absolute top-10 sm:top-16 right-0;
+            @apply bg-red-400 hover:bg-red-500;
+            @apply px-2 py-1 rounded-md;
+            transform: translateY(5px);
+
+            svg {
+                @apply text-white stroke-current;
+            }
+        }
+
+        h2 {
+            @apply font-sans font-bold text-3xl sm:text-4xl;
+            @apply flex items-center gap-2;
+
+            img {
+                @apply object-cover rounded-full;
+                @apply h-7 sm:h-10;
+            }
+        }
+
+        .intro {
+            @apply opacity-50 w-10/12 my-2;
+        }
+
+        h3 {
+            @apply font-sans font-bold text-2xl sm:text-3xl;
+            @apply my-1;
+        }
+    }
+}

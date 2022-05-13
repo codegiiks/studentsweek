@@ -1,0 +1,41 @@
+.auth_wrapper {
+    @apply h-screen w-screen flex flex-col justify-center items-center text-center;
+
+    .auth_box {
+        @apply flex flex-col px-7 py-12 border-2 border-gray-100 bg-white rounded-md;
+
+        .header {
+            @apply font-sans text-3xl sm:text-4xl font-semibold tracking-tight mb-2 text-gray-800;
+        }
+
+        .description {
+            @apply opacity-30 mb-2;
+        }
+
+        .inputField {
+            @apply w-full max-w-xs px-2 py-1 rounded-sm;
+            @apply font-sans;
+            @apply my-2;
+            @apply border-b-2 border-gray-200;
+            @apply focus:outline-none focus:border-blue-500;
+
+            &:not(:placeholder-shown) {
+                @apply border-blue-500;
+            }
+        }
+
+        .button {
+            @apply bg-blue-500 text-white hover:bg-blue-600 px-2 py-1 rounded-md text-xl font-sans font-medium tracking-tight;
+            @apply mt-4;
+
+            &:disabled,
+            &[disabled] {
+                @apply bg-gray-400 text-gray-500 cursor-not-allowed;
+            }
+
+            &.register {
+                @apply bg-gray-300 hover:bg-gray-400;
+            }
+        }
+    }
+}
