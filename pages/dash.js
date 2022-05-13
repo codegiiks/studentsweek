@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getFullName, getPropic } from 'lib/utils';
 import DashboardLayout from 'layouts/Dashboard';
 
