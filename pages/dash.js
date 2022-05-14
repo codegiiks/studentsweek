@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getFullName, getPropic } from 'lib/utils';
+import { getAccessToken, getFullName, getPropic } from 'lib/utils';
 import DashboardLayout from 'layouts/Dashboard';
 
 import style from 'styles/pages/dash.module.css';
@@ -23,6 +23,7 @@ export default function Dashboard({ session, info, logout }) {
     const openSelector = (i) =>
         setSelectorData({
             day: i,
+            user: getAccessToken(session),
         });
 
     const closeSelector = () => setSelectorData(null);
