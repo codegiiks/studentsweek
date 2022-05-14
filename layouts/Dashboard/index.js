@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { Auth } from './auth';
+import { Auth } from '../auth';
 import supabase from 'lib/supabase';
 import Head from 'next/head';
 import { message } from 'react-message-popup';
