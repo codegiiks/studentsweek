@@ -1,6 +1,8 @@
 import supabase from 'lib/supabase';
-import { TableEditor } from 'components';
+import { TableEditor, AdminHeading } from 'components';
 import { AdminLayout } from 'layouts/Admin';
+
+import style from 'styles/pages/admin.users.module.css';
 
 const SCHEMA = [
     {
@@ -37,16 +39,20 @@ export default function AdminPanel() {
     };
 
     return (
-        <TableEditor
-            fetchData={fetchData}
-            tablename="users"
-            schema={SCHEMA}
-            getId={(data) => ({
-                email: data.email,
-            })}
-            finder={(v, i, match) => v.email == match.email}
-            desc="Qui potrai creare e modificare gli utenti inseriti nella piattaforma"
-        />
+        <div className={style.wrapper}>
+            <AdminHeading desc="Qui potrai visualizzare e modificare le informazioni degli utenti iscritti sulla piattaforma">
+                Utenti
+            </AdminHeading>
+            <TableEditor
+                fetchData={fetchData}
+                tablename="users"
+                schema={SCHEMA}
+                getId={(data) => ({
+                    email: data.email,
+                })}
+                finder={(v, i, match) => v.email == match.email}
+            />
+        </div>
     );
 }
 

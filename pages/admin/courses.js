@@ -1,6 +1,7 @@
 import supabase from 'lib/supabase';
-import { TableEditor } from 'components';
+import { CreatePopup, TableEditor, AdminHeading } from 'components';
 import { AdminLayout } from 'layouts/Admin';
+import { useState } from 'react';
 
 const SCHEMA = [
     {
@@ -34,6 +35,8 @@ const SCHEMA = [
 ];
 
 export default function AdminPanel() {
+    const [visiblePopup, setVisiblePopup] = useState(false);
+
     const fetchData = async () => {
         const { data, error } = await supabase
             .from('courses')
@@ -43,16 +46,32 @@ export default function AdminPanel() {
     };
 
     return (
-        <TableEditor
-            fetchData={fetchData}
-            tablename="courses"
-            schema={SCHEMA}
-            getId={(data) => ({
-                id: data.id,
-            })}
-            finder={(v, i, match) => v.id == match.id}
-            desc="Qui potrai creare e modificare i corsi inseriti nella piattaforma"
-        />
+        <div>
+            <AdminHeading desc="Qui potrai creare e modificare i corsi inseriti nella piattaforma">
+                Corsi
+            </AdminHeading>
+            <CreatePopup
+                visible={visiblePopup}
+                close={() => setVisiblePopup(false)}
+            />
+            <TableEditor
+                fetchData={fetchData}
+                tablename="courses"
+                schema={SCHEMA}
+                getId={(data) => ({
+                    id: data.id,
+                })}
+                finder={(v, i, match) => v.id == match.id}
+                buttons={() => (
+                    <button
+                        className="button"
+                        onClick={() => setVisiblePopup(!visiblePopup)}
+                    >
+                        Nuovo Corso
+                    </button>
+                )}
+            />
+        </div>
     );
 }
 

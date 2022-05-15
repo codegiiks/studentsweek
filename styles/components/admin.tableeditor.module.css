@@ -1,4 +1,4 @@
-.search {
+.topButtons {
     @apply flex my-2;
 
     .searchBox {

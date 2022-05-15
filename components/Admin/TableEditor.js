@@ -1,4 +1,3 @@
-import { AdminHeading } from './AdminHeading';
 import { Loader } from '../Loader';
 import supabase from 'lib/supabase';
 import { useState, useRef, useEffect, Fragment } from 'react';
@@ -57,8 +56,7 @@ export function TableEditor({
     getId,
     finder,
     tablename,
-    heading,
-    desc,
+    buttons,
 }) {
     const [selectedDataset, setSelectedDataset] = useState(null);
     const [query, setQuery] = useState(null);
@@ -121,62 +119,58 @@ export function TableEditor({
         );
     };
 
-    return (
-        <div className={style.wrapper}>
-            <AdminHeading desc={desc}>{heading || tablename}</AdminHeading>
-            {selectedDataset ? (
-                <>
-                    <div className={style.search}>
-                        <div className={style.searchBox}>
-                            <input
-                                type="string"
-                                className={style.searchInput}
-                                value={query}
-                                onChange={(e) => setQuery(e.target.value)}
-                            />
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                                className={style.searchIcon}
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                />
-                            </svg>
-                        </div>
+    return selectedDataset ? (
+        <>
+            <div className={style.topButtons}>
+                {buttons && <div className={style.buttons}>{buttons()}</div>}
+                <div className={style.searchBox}>
+                    <input
+                        type="string"
+                        className={style.searchInput}
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                    />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        className={style.searchIcon}
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                    </svg>
+                </div>
+            </div>
+            <div className={style.tableWrapper}>
+                <div className={style.table}>
+                    <div className={style.header}>
+                        {schema.map((v, i) => (
+                            <p key={i}>{v.name}</p>
+                        ))}
                     </div>
-                    <div className={style.tableWrapper}>
-                        <div className={style.table}>
-                            <div className={style.header}>
-                                {schema.map((v, i) => (
-                                    <p key={i}>{v.name}</p>
-                                ))}
-                            </div>
-                            {selectedDataset.map((v, i) => (
-                                <TableRow
-                                    data={v}
-                                    key={i}
-                                    update={updateCourse}
-                                    schema={schema}
-                                    getId={getId}
-                                />
-                            ))}
-                            <div className={style.footer}>
-                                {schema.map((v, i) => (
-                                    <p key={i}>{i == 0 ? 'Total' : ''}</p>
-                                ))}
-                            </div>
-                        </div>
+                    {selectedDataset.map((v, i) => (
+                        <TableRow
+                            data={v}
+                            key={i}
+                            update={updateCourse}
+                            schema={schema}
+                            getId={getId}
+                        />
+                    ))}
+                    <div className={style.footer}>
+                        {schema.map((v, i) => (
+                            <p key={i}>{i == 0 ? 'Total' : ''}</p>
+                        ))}
                     </div>
-                </>
-            ) : (
-                <Loader />
-            )}
-        </div>
+                </div>
+            </div>
+        </>
+    ) : (
+        <Loader />
     );
 }

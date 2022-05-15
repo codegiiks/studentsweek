@@ -1,0 +1,17 @@
+.wrapper {
+    @apply fixed inset-0 overflow-hidden;
+    @apply flex flex-col items-center justify-center;
+    @apply bg-black bg-opacity-40;
+    @apply px-5 sm:px-0;
+    @apply z-10;
+
+    .popup {
+        @apply bg-white rounded-md text-center flex flex-col items-center justify-center;
+        @apply py-10 px-3;
+    }
+
+    .closer {
+        z-index: -1;
+        @apply absolute inset-0;
+    }
+}

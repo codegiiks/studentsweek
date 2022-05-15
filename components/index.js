@@ -8,3 +8,4 @@ export { ErrorPage } from './ErrorPage';
 export { AdminHeading } from './Admin/AdminHeading';
 export { Loader } from './Loader';
 export { TableEditor } from './Admin/TableEditor';
+export { CreatePopup } from './Admin/CreatePopup';
