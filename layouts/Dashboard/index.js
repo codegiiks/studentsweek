@@ -1,14 +1,14 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { Auth } from './auth';
+import { Auth } from '../auth';
 import supabase from 'lib/supabase';
 import Head from 'next/head';
 import { message } from 'react-message-popup';
-import { IntroPopup } from 'components';
+import { ErrorPage, IntroPopup, Loader } from 'components';
 
 import 'styles/layouts/dashboard.index.module.css';
 
 export default function DashboardLayout({ children }) {
-    const [session, setSession] = useState(null);
+    const [session, setSession] = useState('init');
     const [info, setInfo] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const [error, setError] = useState(null);
@@ -46,13 +46,14 @@ export default function DashboardLayout({ children }) {
             .select()
             .eq('email', session?.user?.email);
 
-        console.log(data);
         if (data?.length == 1) setUserInfo(data[0]);
         else setUserInfo('notGiven');
     };
 
     useEffect(() => {
-        if (session) fetchUserInfo();
+        console.log('session', session);
+        if (session != 'init' && session != 'notAllowed' && session)
+            fetchUserInfo();
     }, [session]);
 
     const logout = () => {
@@ -66,27 +67,31 @@ export default function DashboardLayout({ children }) {
         return child;
     });
 
-    return session ? (
-        <>
-            <Head>
-                <title>StudentsWeek - Dashboard</title>
-            </Head>
-            <Suspense fallback={() => <h2>Waiting</h2>}>
-                <IntroPopup
-                    visible={userInfo == 'notGiven'}
-                    close={(data) => setUserInfo(data)}
-                    classes={info?.CLASSES}
-                    session={session}
-                />
-                {childrenWithProps}
-            </Suspense>
-            <style jsx global>{`
-                html {
-                    scroll-padding-top: 20px;
-                }
-            `}</style>
-        </>
-    ) : (
-        <Auth setError={setError} />
-    );
+    if (session == 'init') return <Loader />;
+    else if (session == 'notAllowed')
+        return <ErrorPage error={{ message: 'Non sei autorizzato' }} />;
+    else if (info && session)
+        return (
+            <>
+                <Head>
+                    <title>StudentsWeek - Dashboard</title>
+                </Head>
+                <Suspense fallback={() => <h2>Waiting</h2>}>
+                    <IntroPopup
+                        visible={userInfo == 'notGiven'}
+                        close={(data) => setUserInfo(data)}
+                        classes={info?.CLASSES}
+                        session={session}
+                    />
+                    {childrenWithProps}
+                </Suspense>
+                <style jsx global>{`
+                    html {
+                        scroll-padding-top: 20px;
+                    }
+                `}</style>
+            </>
+        );
+    else if (!info) return <Loader />;
+    else return <Auth setError={setError} />;
 }
