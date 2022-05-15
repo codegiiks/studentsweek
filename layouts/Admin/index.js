@@ -96,11 +96,11 @@ const SIDEBAR_LINKS = [
 
 export function Sidebar({}) {
     return (
-        <div className={style.dashboard}>
+        <div className={style.sidebar}>
             {SIDEBAR_LINKS.map((v, i) => (
                 <Link
                     href={v.href}
-                    className={style.dashboardLink}
+                    className={style.sidebarLink}
                     key={i}
                     as="div"
                 >

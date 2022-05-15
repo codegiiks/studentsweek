@@ -32,3 +32,7 @@ html {
         --navbar-size: calc(7rem);
     }
 }
+
+input:focus {
+    outline: none;
+}

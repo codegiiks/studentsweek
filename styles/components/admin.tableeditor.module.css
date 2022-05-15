@@ -1,0 +1,88 @@
+.search {
+    @apply flex my-2;
+
+    .searchBox {
+        @apply flex bg-warmGray-100 w-min ml-auto;
+        @apply items-center justify-center;
+        @apply border-[1px] border-warmGray-200 rounded-md;
+        @apply px-2 py-1;
+
+        .searchInput {
+            @apply bg-transparent leading-3;
+        }
+
+        .searchIcon {
+            @apply w-4 h-4;
+            @apply text-warmGray-400;
+        }
+    }
+}
+
+.tableWrapper {
+    @apply overflow-auto w-[calc(100vw-66px-2.75rem)] sm:w-[calc(100vw-183px-2.75rem)];
+
+    .table {
+        @apply text-left rounded-lg;
+        @apply flex flex-col;
+        min-width: 900px;
+
+        .header,
+        .footer,
+        .row {
+            @apply flex justify-center items-center;
+
+            & > * {
+                @apply flex-1;
+            }
+        }
+
+        .header,
+        .footer {
+            @apply bg-warmGray-100 h-8;
+            @apply border-[1px] border-warmGray-200;
+
+            p {
+                @apply border-l-[1px] border-warmGray-200 px-2 font-semibold;
+
+                &:first-child {
+                    @apply border-l-0;
+                }
+            }
+
+            &:first-child {
+                border-radius: 0.375rem 0.375rem 0 0;
+            }
+
+            &:last-child {
+                border-radius: 0 0 0.375rem 0.375rem;
+            }
+        }
+
+        .row {
+            @apply bg-warmGray-50 h-12;
+
+            & > div {
+                @apply border-[1px] border-warmGray-200;
+                @apply px-3 py-1 h-full relative;
+                @apply overflow-hidden;
+
+                &.editing {
+                    overflow: unset;
+
+                    input,
+                    textarea {
+                        @apply h-20 w-full shadow-sm;
+                        @apply bg-warmGray-50 p-1;
+                        @apply relative z-50;
+                        @apply border-2 border-warmGray-200 rounded-md;
+                        transform: scale(1.1);
+                    }
+
+                    textarea {
+                        @apply h-40;
+                    }
+                }
+            }
+        }
+    }
+}
