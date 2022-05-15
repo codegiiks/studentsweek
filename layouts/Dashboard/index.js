@@ -92,6 +92,6 @@ export default function DashboardLayout({ children }) {
                 `}</style>
             </>
         );
-    else if (!info) return <Loader />;
+    else if (!info && session) return <Loader />;
     else return <Auth setError={setError} />;
 }
