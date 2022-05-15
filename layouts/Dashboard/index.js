@@ -26,6 +26,7 @@ export default function DashboardLayout({ children }) {
 
         const session = supabase.auth.session();
         if (session) setSession(session);
+        else setSession(null);
 
         fetchInfo();
 
