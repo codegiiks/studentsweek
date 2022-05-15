@@ -1,0 +1,25 @@
+.wrapper {
+    @apply rounded-md w-full h-28 flex items-center justify-center my-3 border-2 border-warmGray-100;
+
+    .textWrapper {
+        @apply flex-[2] mx-3 sm:mx-5;
+
+        h2 {
+            @apply text-left text-xl sm:text-2xl font-bold;
+            @apply truncate w-36 sm:w-72;
+        }
+
+        p {
+            @apply text-sm sm:text-base text-left w-32 sm:w-72 leading-4 text-trueGray-500 font-light sm:my-1;
+            @apply truncate;
+        }
+
+        .org {
+            @apply text-xs text-left sm:w-4/5 font-thin;
+        }
+    }
+
+    .emoji {
+        @apply flex-1 bg-sky-500 h-full ml-auto leading-[7rem] text-5xl text-center rounded-r-md;
+    }
+}
