@@ -22,7 +22,6 @@ export function SelectCoursePopup({ data, visible, close }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            return;
             const fetchedData = await axios
                 .get('/api/courses', {
                     params: data,
