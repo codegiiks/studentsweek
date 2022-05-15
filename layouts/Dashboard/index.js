@@ -15,10 +15,11 @@ export default function DashboardLayout({ children }) {
 
     useEffect(() => {
         const fetchInfo = async () => {
-            const data = await supabase.from('info').select();
+            const { data } = await supabase.from('info').select();
             if (data) {
                 const tinfo = {};
-                data.body.forEach((v, i) => (tinfo[v?.id] = v?.value));
+                console.log(data);
+                data.forEach((v, i) => (tinfo[v?.id] = v?.value));
                 setInfo(tinfo);
             }
         };
