@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { message } from 'react-message-popup';
 import style from 'styles/layouts/admin.index.module.css';
 import { ErrorPage, Link } from 'components';
+import { getEmail } from 'lib/utils';
 
 const SIDEBAR_LINKS = [
     {
@@ -160,11 +161,11 @@ export function AdminLayout({ children }) {
         return (
             <>
                 <Head>
-                    <title>Barriere Architettoniche - Admin</title>
+                    <title>StudentsWeek - Admin</title>
                 </Head>
                 <div className="bg-black flex px-2 text-white font-sans font-medium text-sm py-1 sticky top-0 left-0 right-0">
                     <div>
-                        <p>Loggato come {session.user.email}</p>
+                        <p>Loggato come {getEmail(session)}</p>
                     </div>
                     <div className="ml-auto">
                         <button
