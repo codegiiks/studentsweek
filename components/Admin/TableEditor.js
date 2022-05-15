@@ -113,7 +113,6 @@ export function TableEditor({
                     .match(match);
 
                 if (error) return message.error(error.message);
-                console.log('Sent!', data);
             }, 3000)
         );
     };
@@ -170,6 +169,6 @@ export function TableEditor({
             </div>
         </>
     ) : (
-        <Loader />
+        <Loader space />
     );
 }

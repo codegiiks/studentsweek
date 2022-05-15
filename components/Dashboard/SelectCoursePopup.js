@@ -1,15 +1,18 @@
 import axios from 'axios';
+import { Loader } from 'components';
 import { useEffect, useState, useRef } from 'react';
 import { message } from 'react-message-popup';
 import style from 'styles/components/selectcoursepopup.module.css';
 import { CourseTile } from '../CourseTile';
 
 export function CoursesTable({ data }) {
-    return data
-        ? data.map((v, i) => (
-              <CourseTile className={style.courseTile} key={i} data={v} />
-          ))
-        : null;
+    return data ? (
+        data.map((v, i) => (
+            <CourseTile className={style.courseTile} key={i} data={v} />
+        ))
+    ) : (
+        <Loader space />
+    );
 }
 
 export function SelectCoursePopup({ data, visible, close }) {
@@ -19,18 +22,7 @@ export function SelectCoursePopup({ data, visible, close }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const cc = Array.from({ length: 10 }).map((v, i) => ({
-                name: 'Ciao',
-                emoji: '✌🏻',
-                org: {
-                    name: 'Cocco',
-                },
-                desc: 'Ciaooooooo',
-            }));
-            setSelectedCourses(cc);
-            courses.current = cc;
             return;
-
             const fetchedData = await axios
                 .get('/api/courses', {
                     params: data,
@@ -42,6 +34,7 @@ export function SelectCoursePopup({ data, visible, close }) {
             setSelectedCourses(fetchedData);
         };
 
+        setSelectedCourses(null);
         if (visible) fetchData();
     }, [data]);
 

@@ -1,0 +1,39 @@
+.wrapper {
+    @apply w-full h-full flex items-center justify-center;
+
+    &.space {
+        @apply py-10;
+    }
+
+    .loader {
+        @apply flex gap-2;
+
+        div {
+            @apply w-5 h-5 rounded-full text-transparent;
+            background: var(--loader-color);
+            --loader-speed: 0.4s;
+            content: ' ';
+            transform: scale(0);
+            animation: loading var(--loader-speed)
+                cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite alternate;
+            animation-delay: calc(var(--loader-speed) * 0.33);
+
+            &:first-child {
+                animation-delay: 0s;
+            }
+
+            &:last-child {
+                animation-delay: calc(var(--loader-speed) * 0.66);
+            }
+        }
+    }
+}
+
+@keyframes loading {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
