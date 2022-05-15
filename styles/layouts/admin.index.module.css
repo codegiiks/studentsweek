@@ -18,6 +18,6 @@
     }
 
     .content {
-        @apply flex-1 py-5 px-2;
+        @apply flex-1 py-5 ml-2 mr-4;
     }
 }

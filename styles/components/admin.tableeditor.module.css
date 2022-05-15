@@ -19,7 +19,7 @@
 }
 
 .tableWrapper {
-    @apply overflow-auto w-[calc(100vw-66px-2.75rem)] sm:w-[calc(100vw-183px-2.75rem)];
+    @apply overflow-auto w-[calc(100vw-66px-3.25rem)] sm:w-[calc(100vw-183px-3.25rem)];
 
     .table {
         @apply text-left rounded-lg;
