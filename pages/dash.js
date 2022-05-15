@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { getAccessToken, getFullName, getPropic } from 'lib/utils';
 import DashboardLayout from 'layouts/Dashboard';
 
@@ -62,10 +62,10 @@ export default function Dashboard({ session, info, logout }) {
                     </h2>
                     <p className={style.intro}>{info.INTRO_DESC}</p>
                     {Array.from({ length: info.N_OF_DAYS }).map((v, i) => (
-                        <>
+                        <Fragment key={i}>
                             <h3>{getDayName(i)}</h3>
                             <NoCard onClick={() => openSelector(i)} />
-                        </>
+                        </Fragment>
                     ))}
                 </div>
             </main>

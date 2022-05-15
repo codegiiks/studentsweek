@@ -82,7 +82,6 @@ export function TableEditor({
             findAllMatches: true,
         });
         setSelectedDataset(fuse.search(query).map((v) => v.item));
-        console.log(fuse.search(query).map((v) => v.item));
     };
 
     const updateSelected = async () => {

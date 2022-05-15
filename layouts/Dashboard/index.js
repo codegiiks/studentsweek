@@ -18,7 +18,6 @@ export default function DashboardLayout({ children }) {
             const { data } = await supabase.from('info').select();
             if (data) {
                 const tinfo = {};
-                console.log(data);
                 data.forEach((v, i) => (tinfo[v?.id] = v?.value));
                 setInfo(tinfo);
             }
@@ -52,7 +51,6 @@ export default function DashboardLayout({ children }) {
     };
 
     useEffect(() => {
-        console.log('session', session);
         if (session != 'init' && session != 'notAllowed' && session)
             fetchUserInfo();
     }, [session]);
