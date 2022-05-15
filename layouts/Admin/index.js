@@ -118,6 +118,7 @@ export function AdminLayout({ children }) {
     const [error, setError] = useState(null);
 
     const checkSession = async (s) => {
+        if (!s) return setSession(null);
         if (s?.user?.email) {
             const userData = await supabase
                 .from('users')
@@ -131,7 +132,7 @@ export function AdminLayout({ children }) {
 
     useEffect(() => {
         const session = supabase.auth.session();
-        if (session) checkSession(session);
+        checkSession(session);
 
         supabase.auth.onAuthStateChange((event, session) => {
             if (event == 'SIGNED_IN') checkSession(session);
