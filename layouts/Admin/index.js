@@ -4,7 +4,7 @@ import supabase from 'lib/supabase';
 import Head from 'next/head';
 import { message } from 'react-message-popup';
 import style from 'styles/layouts/admin.index.module.css';
-import { ErrorPage, Link } from 'components';
+import { ErrorPage, Link, Loader } from 'components';
 import { getEmail } from 'lib/utils';
 
 const SIDEBAR_LINKS = [
@@ -114,7 +114,7 @@ export function Sidebar({}) {
 }
 
 export function AdminLayout({ children }) {
-    const [session, setSession] = useState(null);
+    const [session, setSession] = useState('init');
     const [error, setError] = useState(null);
 
     const checkSession = async (s) => {
@@ -157,7 +157,9 @@ export function AdminLayout({ children }) {
 
     if (session == 'notAllowed')
         return <ErrorPage error={{ message: 'Non sei un admin' }} />;
-    else if (session)
+    else if (session == 'init') {
+        return <Loader />;
+    } else if (session)
         return (
             <>
                 <Head>
