@@ -89,8 +89,8 @@ export function SelectCoursePopup({ data, visible, close }) {
                 <>
                     <h4>{selected.name}</h4>
                     <p className={style.desc}>
-                        {selected.desc ||
-                            "Scegli l'ora in cui vuoi praticare il corso"}
+                        {selected.desc +
+                            ". Scegli l'ora in cui vuoi praticare il corso"}
                     </p>
                     <HourSelector
                         select={subToCourse}

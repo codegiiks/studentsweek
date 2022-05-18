@@ -1,7 +1,7 @@
 import { Loader } from 'components';
 import style from 'styles/components/hourselector.module.css';
+import { getByHoursDiff } from 'lib/utils';
 
-const START_TIME = process.env.NEXT_PUBLIC_START_TIME;
 const N_OF_HOURS = process.env.NEXT_PUBLIC_N_OF_HOURS;
 
 const CONVERT = [
@@ -16,12 +16,6 @@ const CONVERT = [
 ];
 
 export function HourSelector({ select, rules, className }) {
-    const getByHoursDiff = (diff, date = new Date(START_TIME)) => {
-        date.setTime(date.getTime() + diff * 60 * 60 * 1000);
-
-        return `${date.getHours()}:${date.getMinutes()}`;
-    };
-
     const hourBoxes = [];
     console.log(rules);
 

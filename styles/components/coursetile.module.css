@@ -1,15 +1,15 @@
 .wrapper {
-    @apply rounded-md w-full h-28 flex items-center justify-center my-3 border-2 border-warmGray-100;
+    @apply rounded-md w-full h-28 flex items-center justify-center border-2 border-warmGray-100;
 
     .textWrapper {
         @apply flex-[2] mx-3 sm:mx-5;
 
-        h2 {
+        h2.name {
             @apply text-left text-xl sm:text-2xl font-bold;
             @apply truncate w-36 sm:w-72;
         }
 
-        p {
+        p.desc {
             @apply text-sm sm:text-base text-left w-32 sm:w-72 leading-4 text-trueGray-500 font-light sm:my-1;
             @apply truncate;
         }
@@ -22,4 +22,9 @@
     .emoji {
         @apply flex-1 bg-sky-500 h-full ml-auto leading-[7rem] text-5xl text-center rounded-r-md;
     }
+}
+
+.otherInfo {
+    @apply flex bg-warmGray-100 rounded-b-md text-xs sm:text-sm px-2 py-1 -mt-1 mb-3;
+    @apply text-warmGray-500;
 }

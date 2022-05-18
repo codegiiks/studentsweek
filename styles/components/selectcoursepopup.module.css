@@ -42,7 +42,7 @@
         }
 
         .courseTile {
-            @apply cursor-pointer hover:bg-warmGray-50 hover:bg-opacity-50;
+            @apply cursor-pointer hover:bg-warmGray-50 hover:bg-opacity-50 my-3;
         }
     }
 

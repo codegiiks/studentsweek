@@ -3,7 +3,7 @@
 
     .wrapper {
         @apply flex flex-col;
-        @apply md:w-8/12;
+        @apply w-full md:w-8/12;
         @apply py-10 sm:py-16;
         @apply relative;
 
@@ -37,4 +37,8 @@
             @apply mt-3 mb-1;
         }
     }
+}
+
+.courseTile {
+    @apply mt-3;
 }

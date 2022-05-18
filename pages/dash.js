@@ -1,9 +1,10 @@
-import { Fragment, useState } from 'react';
-import { getAccessToken, getFullName, getPropic } from 'lib/utils';
+import supabase from 'lib/supabase';
+import { Fragment, useEffect, useState } from 'react';
+import { getAccessToken, getEmail, getFullName, getPropic } from 'lib/utils';
 import DashboardLayout from 'layouts/Dashboard';
 
 import style from 'styles/pages/dash.module.css';
-import { NoCard, SelectCoursePopup } from 'components';
+import { CourseTile, NoCard, SelectCoursePopup } from 'components';
 
 const DAY_NAMES = [
     'Lunedì',
@@ -15,8 +16,23 @@ const DAY_NAMES = [
     'Domenica',
 ];
 
+export function CoursesList({ openSelector, data, info }) {
+    return (
+        <>
+            {data &&
+                data.map((v, i) => (
+                    <CourseTile data={v} key={i} className={style.courseTile} />
+                ))}
+            {data?.length != info.N_OF_HOURS && (
+                <NoCard onClick={openSelector} />
+            )}
+        </>
+    );
+}
+
 export default function Dashboard({ session, info, logout }) {
     const [selectorData, setSelectorData] = useState(null);
+    const [subs, setSubs] = useState({});
     const getDayName = (i) =>
         DAY_NAMES[(new Date(info.DAY_OF_START).getDay() + i - 1) % 7];
 
@@ -26,7 +42,32 @@ export default function Dashboard({ session, info, logout }) {
             user: getAccessToken(session),
         });
 
-    const closeSelector = () => setSelectorData(null);
+    const closeSelector = () => {
+        setSelectorData(null);
+        fetchSubs();
+    };
+
+    const fetchSubs = async () => {
+        const { data, error } = await supabase
+            .rpc('get_user_subs', {
+                inputemail: getEmail(session),
+            })
+            .order('hour');
+        if (error) return message.error(error.message);
+        console.log(data);
+
+        let parsed = {};
+
+        data.forEach((v) =>
+            parsed[v.day] ? parsed[v.day].push(v) : (parsed[v.day] = [v])
+        );
+
+        setSubs(parsed);
+    };
+
+    useEffect(() => {
+        if (session) fetchSubs();
+    }, []);
 
     return info && session ? (
         <>
@@ -63,8 +104,13 @@ export default function Dashboard({ session, info, logout }) {
                     <p className={style.intro}>{info.INTRO_DESC}</p>
                     {Array.from({ length: info.N_OF_DAYS }).map((v, i) => (
                         <Fragment key={i}>
+                            {console.log(i, subs[i])}
                             <h3>{getDayName(i)}</h3>
-                            <NoCard onClick={() => openSelector(i)} />
+                            <CoursesList
+                                openSelector={() => openSelector(i)}
+                                data={subs[i]}
+                                info={info}
+                            />
                         </Fragment>
                     ))}
                 </div>
