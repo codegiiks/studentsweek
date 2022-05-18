@@ -1,5 +1,5 @@
 .spacer {
-    @apply flex items-center mx-3 sm:mx-0 sm:justify-center;
+    @apply flex items-center mx-3 md:mx-0 sm:justify-center;
 
     .wrapper {
         @apply flex flex-col;
