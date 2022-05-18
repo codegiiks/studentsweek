@@ -1,5 +1,5 @@
 {
-    "name": "simple-trivia",
+    "name": "studentsweek",
     "private": true,
     "scripts": {
         "dev": "next dev",
@@ -14,6 +14,9 @@
         "ci:gui": "start-server-and-test \"npm run build && npm run start\" http://127.0.0.1:3000 cypress"
     },
     "dependencies": {
+        "@jsonforms/core": "^2.5.2",
+        "@jsonforms/react": "^2.5.2",
+        "@jsonforms/vanilla-renderers": "^2.5.2",
         "@supabase/supabase-js": "^1.35.3",
         "axios": "^0.27.2",
         "fuse.js": "^6.6.2",

@@ -1,42 +1,53 @@
 import supabase from 'lib/supabase';
-import { TableEditor, AdminHeading } from 'components';
+import { useState, useEffect } from 'react';
 import { AdminLayout } from 'layouts/Admin';
+import { TableEditor, AdminHeading } from 'components';
 
 import style from 'styles/pages/admin.users.module.css';
 
-const SCHEMA = [
-    {
-        id: 'name',
-        name: 'Nome',
+const SCHEMA = {
+    type: 'object',
+    properties: {
+        name: {
+            type: 'string',
+            label: 'Nome',
+            minLength: 3,
+        },
+        email: {
+            type: 'string',
+            label: 'Email',
+            minLength: 5,
+        },
+        class: {
+            type: 'string',
+            label: 'Classe',
+        },
+        propic: {
+            type: 'string',
+            label: 'Propic',
+        },
+        role: {
+            type: 'string',
+            label: 'Ruolo',
+            enum: ['Admin', 'Student'],
+        },
     },
-    {
-        id: 'email',
-        name: 'Email',
-    },
-    {
-        id: 'class',
-        name: 'Classe',
-    },
-    {
-        id: 'propic',
-        name: 'Propic',
-    },
-    {
-        id: 'role',
-        name: 'Ruolo',
-        as: 'select',
-        enum: ['admin', 'student'],
-    },
-];
+};
 
 export default function AdminPanel() {
-    const fetchData = async () => {
-        const { data, error } = await supabase
-            .from('users')
-            .select('name, email, propic, class, role');
-        if (error) throw message.error(error.message);
-        return data;
-    };
+    const [users, setUsers] = useState(null);
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const { data, error } = await supabase
+                .from('users')
+                .select('name, email, propic, class, role');
+            if (error) throw message.error(error.message);
+            return data;
+        };
+
+        fetchUsers().then((d) => setUsers(d));
+    });
 
     return (
         <div className={style.wrapper}>
@@ -44,7 +55,7 @@ export default function AdminPanel() {
                 Utenti
             </AdminHeading>
             <TableEditor
-                fetchData={fetchData}
+                data={users}
                 tablename="users"
                 schema={SCHEMA}
                 getId={(data) => ({

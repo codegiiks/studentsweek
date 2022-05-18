@@ -23,7 +23,7 @@ export function SelectCoursePopup({ data, visible, close }) {
     const [selectedCourses, setSelectedCourses] = useState(null);
     const [selected, setSelected] = useState(null);
     const [userAvail, setUserAvail] = useState(null);
-    const [query, setQuery] = useState(null);
+    const [query, setQuery] = useState('');
     const courses = useRef(null);
 
     useEffect(() => {
