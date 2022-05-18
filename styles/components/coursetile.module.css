@@ -25,6 +25,6 @@
 }
 
 .otherInfo {
-    @apply flex bg-warmGray-100 rounded-b-md text-xs sm:text-sm px-2 py-1 -mt-1 mb-3;
+    @apply flex bg-warmGray-100 rounded-b-md text-xs sm:text-sm px-3 sm:px-5 py-1 -mt-1 mb-3;
     @apply text-warmGray-500;
 }
