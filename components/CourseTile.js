@@ -1,4 +1,4 @@
-import { getByHoursDiff } from 'lib/utils';
+import { generateColor, getByHoursDiff } from 'lib/utils';
 import style from 'styles/components/coursetile.module.css';
 import { Loader } from './Loader';
 
@@ -15,7 +15,14 @@ export function CourseTile({ data, className, ...props }) {
                         {data?.org?.name || data?.user_name}
                     </p>
                 </div>
-                <div className={style.emoji}>{data.emoji}</div>
+                <div
+                    className={style.emoji}
+                    style={{
+                        '--bg-color': generateColor(data.name),
+                    }}
+                >
+                    {data.emoji}
+                </div>
             </div>
             {data.hour != undefined ? (
                 <div className={style.otherInfo}>

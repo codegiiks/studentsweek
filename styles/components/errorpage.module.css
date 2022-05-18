@@ -1,0 +1,25 @@
+.wrapper {
+    @apply w-full h-full flex items-center justify-center flex-col;
+
+    .artwork {
+        @apply h-40 sm:h-56 -mb-6 z-10;
+    }
+
+    .error {
+        @apply bg-warmGray-50 p-10 rounded-lg text-center;
+        @apply border-[10px] border-[#c3b0bd];
+
+        h2 {
+            @apply font-sans font-bold text-4xl mb-2;
+            text-shadow: 2px 2px 0 #00d20f;
+        }
+
+        p {
+            @apply opacity-50 max-w-[300px] mx-auto;
+        }
+
+        button {
+            @apply px-2 py-1 bg-laurel-400 rounded-md text-white mt-5 border-2 border-laurel-500;
+        }
+    }
+}

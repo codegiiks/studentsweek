@@ -20,7 +20,8 @@
     }
 
     .emoji {
-        @apply flex-1 bg-sky-500 h-full ml-auto leading-[7rem] text-5xl text-center rounded-r-md;
+        @apply flex-1 h-full ml-auto leading-[7rem] text-5xl text-center rounded-r-md;
+        background: var(--bg-color);
     }
 }
 

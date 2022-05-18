@@ -6,12 +6,21 @@ import { message } from 'react-message-popup';
 import { ErrorPage, IntroPopup, Loader } from 'components';
 
 import 'styles/layouts/dashboard.index.module.css';
+import { getEmail } from 'lib/utils';
 
 export default function DashboardLayout({ children }) {
     const [session, setSession] = useState('init');
     const [info, setInfo] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const [error, setError] = useState(null);
+
+    const checkSession = (s) => {
+        if (!s) setSession(null);
+        const email = getEmail(s);
+
+        if (/^(.*)@liceoischia.edu.it$/gi.exec(email)) setSession(s);
+        else setSession('notAllowed');
+    };
 
     useEffect(() => {
         const fetchInfo = async () => {
@@ -24,13 +33,12 @@ export default function DashboardLayout({ children }) {
         };
 
         const session = supabase.auth.session();
-        if (session) setSession(session);
-        else setSession(null);
+        checkSession(session);
 
         fetchInfo();
 
         supabase.auth.onAuthStateChange((event, session) => {
-            if (event == 'SIGNED_IN') setSession(session);
+            if (event == 'SIGNED_IN') checkSession(session);
             else if (event == 'SIGNED_OUT') setSession(false);
         });
     }, []);
@@ -68,7 +76,16 @@ export default function DashboardLayout({ children }) {
 
     if (session == 'init') return <Loader />;
     else if (session == 'notAllowed')
-        return <ErrorPage error={{ message: 'Non sei autorizzato' }} />;
+        return (
+            <ErrorPage
+                error={{
+                    code: 400,
+                    message:
+                        "Sembra che tu non possa accedere a questo sito. Sei sicuro di aver fatto l'accesso con l' account istituzionale?",
+                }}
+                logout={logout}
+            />
+        );
     else if (info && session)
         return (
             <>
