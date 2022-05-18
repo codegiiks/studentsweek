@@ -9,6 +9,10 @@
         @apply bg-white rounded-md flex flex-col items-center justify-center;
         @apply p-4 w-full sm:w-11/12 sm:max-w-[500px];
 
+        .hourSelector {
+            @apply mt-5;
+        }
+
         .coursesWrapper {
             @apply overflow-auto w-full;
             max-height: 500px;

@@ -1,0 +1,30 @@
+.wrapper {
+    @apply flex w-full border-[1px] border-warmGray-200 rounded-md;
+
+    .hour {
+        @apply flex flex-col h-20 hover:bg-warmGray-50 flex-1 items-center justify-center text-center;
+        @apply font-sans border-l-[1px] border-warmGray-200;
+        @apply cursor-pointer;
+
+        &.disabled {
+            @apply bg-warmGray-100 cursor-not-allowed;
+        }
+
+        p {
+            @apply text-sm sm:text-base;
+        }
+
+        span {
+            @apply text-xs text-warmGray-400;
+        }
+
+        &:first-child {
+            border-radius: 0.375rem 0 0 0.375rem;
+            @apply border-l-0;
+        }
+
+        &:last-child {
+            border-radius: 0 0.375rem 0.375rem 0;
+        }
+    }
+}
