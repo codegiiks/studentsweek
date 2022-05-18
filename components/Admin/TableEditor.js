@@ -1,18 +1,19 @@
-import { Loader } from '../Loader';
+// import { Loader } from '../Loader';
 import supabase from 'lib/supabase';
-import { useState, useRef, useEffect, Fragment } from 'react';
+import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { message } from 'react-message-popup';
 
 import style from 'styles/components/admin.tableeditor.module.css';
 
-export function Input(props) {
+// eslint-disable-next-line react/display-name
+const Input = React.forwardRef((props, ref) => {
     switch (props.as) {
         case 'textarea':
-            return <textarea {...props} />;
+            return <textarea {...props} ref={ref} />;
         default:
-            return <input {...props} />;
+            return <input {...props} ref={ref} />;
     }
-}
+});
 
 export function DataPopup({ insert }) {
     return <div className={style.dataPopup}></div>;
@@ -20,29 +21,56 @@ export function DataPopup({ insert }) {
 
 export function TableRow({ data, update, schema, getId }) {
     const [editing, setEditing] = useState(null);
+    const inputEl = useRef(null);
+    const editingRef = useRef(null);
 
-    const renderValue = (v) => (v.render ? v.render(data) : data[v.id]);
+    useEffect(() => {
+        const checkOutsideClick = (e) => {
+            if (
+                editingRef.current &&
+                inputEl.current != e.target &&
+                e.target.getAttribute('data-ignore-click') != 'true'
+            )
+                setEditing(null);
+        };
 
-    const changeValue = (id, value) => update(getId(data), { [id]: value });
+        if (document) document.addEventListener('click', checkOutsideClick);
+
+        return () => {
+            document.removeEventListener('click', checkOutsideClick);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!editing) inputEl.current = null;
+        editingRef.current = editing;
+    }, [editing]);
+
+    const renderValue = (id, v) => (v.render ? v.render(data) : data[id]);
+
+    const changeValue = (id, v) => update(getId(data), { [id]: v });
 
     return (
         <div className={[style.row, editing && style.editing].join(' ')}>
-            {schema.map((v, i) => (
+            {Object.entries(schema.properties).map(([id, v]) => (
                 <div
-                    key={i}
-                    onClick={() => setEditing(i)}
-                    className={editing == i ? style.editing : null}
+                    key={id}
+                    onClick={() => setEditing(id)}
+                    className={editing == id ? style.editing : null}
+                    data-ignore-click="true"
                 >
-                    {editing == i && !v.uneditable ? (
+                    {editing == id && !v.uneditable ? (
                         <Input
                             type={v.type || 'string'}
                             placeholder={v.name}
-                            value={renderValue(v)}
-                            onChange={(e) => changeValue(v.id, e.target.value)}
+                            value={renderValue(id, v)}
+                            onChange={(e) => changeValue(id, e.target.value)}
                             as={v.as}
+                            ref={inputEl}
+                            {...v.options}
                         />
                     ) : (
-                        renderValue(v) || 'No Data'
+                        renderValue(id, v) || 'No Data'
                     )}
                 </div>
             ))}
@@ -51,41 +79,38 @@ export function TableRow({ data, update, schema, getId }) {
 }
 
 export function TableEditor({
+    data,
     schema,
-    fetchData,
     getId,
     finder,
     tablename,
     buttons,
 }) {
-    const [selectedDataset, setSelectedDataset] = useState(null);
-    const [query, setQuery] = useState(null);
+    const [query, setQuery] = useState('');
+    const [filtered, setFiltered] = useState(null);
     const [changeTimeout, setChangeTimeout] = useState(null);
-    const dataset = useRef(null);
 
     useEffect(() => {
-        const fetchAndSetDataset = async () => {
-            setSelectedDataset((dataset.current = await fetchData()));
-        };
-        fetchAndSetDataset();
-    }, []);
+        if (!data) return;
+        setFiltered(data);
+    }, [data]);
 
     useEffect(() => {
         updateSelected();
-    }, [dataset, query]);
+    }, [filtered, query]);
 
     const search = async (query) => {
-        if (!dataset.current) return;
+        if (!data) return;
         const Fuse = (await import('fuse.js')).default;
-        const fuse = new Fuse(dataset.current, {
-            keys: schema.map((v) => v.id),
+        const fuse = new Fuse(data, {
+            keys: Object.keys(schema.properties),
             findAllMatches: true,
         });
-        setSelectedDataset(fuse.search(query).map((v) => v.item));
+        setFiltered(fuse.search(query).map((v) => v.item));
     };
 
     const updateSelected = async () => {
-        if (!query || query == '') return setSelectedDataset(dataset.current);
+        if (!query || query == '') return setFiltered(data);
         // if (searchTimeout.current) clearTimeout(searchTimeout.current);
         // searchTimeout.current = setTimeout(async () => {
         //   await searchTrailhead(query);
@@ -94,11 +119,9 @@ export function TableEditor({
     };
 
     const updateCourse = async (match, value) => {
-        const courseIndex = dataset.current.findIndex((v, i) =>
-            finder(v, i, match)
-        );
-        dataset.current[courseIndex] = {
-            ...dataset.current[courseIndex],
+        const courseIndex = filtered.findIndex((v, i) => finder(v, i, match));
+        filtered[courseIndex] = {
+            ...filtered[courseIndex],
             ...value,
         };
         updateSelected();
@@ -113,62 +136,68 @@ export function TableEditor({
                     .match(match);
 
                 if (error) return message.error(error.message);
+                message.success('Cambiamento effettuato');
             }, 3000)
         );
     };
 
-    return selectedDataset ? (
-        <>
-            <div className={style.topButtons}>
-                {buttons && <div className={style.buttons}>{buttons()}</div>}
-                <div className={style.searchBox}>
-                    <input
-                        type="string"
-                        className={style.searchInput}
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                    />
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        className={style.searchIcon}
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+    const { properties } = schema;
+    return (
+        filtered && (
+            <>
+                <div className={style.topButtons}>
+                    {buttons && (
+                        <div className={style.buttons}>{buttons()}</div>
+                    )}
+                    <div className={style.searchBox}>
+                        <input
+                            type="string"
+                            className={style.searchInput}
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
                         />
-                    </svg>
-                </div>
-            </div>
-            <div className={style.tableWrapper}>
-                <div className={style.table}>
-                    <div className={style.header}>
-                        {schema.map((v, i) => (
-                            <p key={i}>{v.name}</p>
-                        ))}
-                    </div>
-                    {selectedDataset.map((v, i) => (
-                        <TableRow
-                            data={v}
-                            key={i}
-                            update={updateCourse}
-                            schema={schema}
-                            getId={getId}
-                        />
-                    ))}
-                    <div className={style.footer}>
-                        {schema.map((v, i) => (
-                            <p key={i}>{i == 0 ? 'Total' : ''}</p>
-                        ))}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            className={style.searchIcon}
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            />
+                        </svg>
                     </div>
                 </div>
-            </div>
-        </>
-    ) : (
-        <Loader space />
+                <div className={style.tableWrapper}>
+                    <div className={style.table}>
+                        <div className={style.header}>
+                            {Object.entries(properties).map(
+                                ([key, { label }]) => (
+                                    <p key={key}>{label}</p>
+                                )
+                            )}
+                        </div>
+                        {filtered.map((v, i) => (
+                            <TableRow
+                                data={v}
+                                key={i}
+                                update={updateCourse}
+                                schema={schema}
+                                getId={getId}
+                            />
+                        ))}
+                        <div className={style.footer}>
+                            {Object.values(properties).map((_v, i) => (
+                                <p key={i}>{i == 0 ? 'Total' : ''}</p>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
     );
 }

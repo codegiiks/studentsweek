@@ -1,49 +1,60 @@
 import supabase from 'lib/supabase';
+import { useState, useEffect } from 'react';
 import { CreatePopup, TableEditor, AdminHeading } from 'components';
 import { AdminLayout } from 'layouts/Admin';
-import { useState } from 'react';
 
-const SCHEMA = [
-    {
-        id: 'emoji',
-        name: '',
+const SCHEMA = {
+    type: 'object',
+    properties: {
+        emoji: {
+            type: 'string',
+            label: 'Emoji',
+        },
+        name: {
+            type: 'string',
+            label: 'Nome',
+            minLength: 3,
+        },
+        org: {
+            type: 'string',
+            label: 'Organizzatore',
+            render: (v) => v.org.name,
+            options: {
+                readOnly: true,
+            },
+        },
+        desc: {
+            type: 'string',
+            label: 'Descrizione',
+            as: 'textarea',
+        },
+        limit: {
+            type: 'number',
+            label: 'Limite',
+            minimum: 1,
+        },
+        room: {
+            type: 'number',
+            label: 'Aula',
+        },
     },
-    {
-        id: 'name',
-        name: 'Nome',
-    },
-    {
-        id: 'org',
-        name: 'Organizzatore',
-        render: (v) => v.org.name,
-        uneditable: true,
-    },
-    {
-        id: 'desc',
-        name: 'Descrizione',
-        as: 'textarea',
-    },
-    {
-        id: 'limit',
-        name: 'Limite',
-        type: 'number',
-    },
-    {
-        id: 'room',
-        name: 'Aula',
-    },
-];
+};
 
-export default function AdminPanel() {
+export default function CoursesPanel() {
+    const [courses, setCourses] = useState(null);
     const [visiblePopup, setVisiblePopup] = useState(false);
 
-    const fetchData = async () => {
-        const { data, error } = await supabase
-            .from('courses')
-            .select('name, org ( name ), desc, limit, emoji, room, id');
-        if (error) throw message.error(error.message);
-        return data;
-    };
+    useEffect(() => {
+        const fetchCourses = async () => {
+            const { data, error } = await supabase
+                .from('courses')
+                .select('name, org ( name ), desc, limit, emoji, room, id');
+            if (error) throw message.error(error.message);
+            return data;
+        };
+
+        fetchCourses().then((d) => setCourses(d));
+    });
 
     return (
         <div>
@@ -55,7 +66,7 @@ export default function AdminPanel() {
                 close={() => setVisiblePopup(false)}
             />
             <TableEditor
-                fetchData={fetchData}
+                data={courses}
                 tablename="courses"
                 schema={SCHEMA}
                 getId={(data) => ({
@@ -75,4 +86,4 @@ export default function AdminPanel() {
     );
 }
 
-AdminPanel.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
+CoursesPanel.getLayout = (page) => <AdminLayout>{page}</AdminLayout>;
