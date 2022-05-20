@@ -27,11 +27,10 @@ export function HourSelector({
 
     const renderHours = (i) =>
         Array.from({ length: info.N_OF_HOURS }).map((h, j) => {
+            const disabled = !checkHourByRule(rules[i] & userRules[i], j, unit);
             const hourClassName = [
                 style.hour,
-                !checkHourByRule(rules[i] & userRules[i], j)
-                    ? style.disabled
-                    : null,
+                disabled ? style.disabled : null,
             ].join(' ');
 
             if (
@@ -42,7 +41,7 @@ export function HourSelector({
                     <div
                         className={hourClassName}
                         key={j}
-                        onClick={() => selectHour(i, j)}
+                        onClick={() => !disabled && selectHour(i, j)}
                     >
                         <p>{CONVERT[j]}</p>
                         <span>
@@ -55,7 +54,7 @@ export function HourSelector({
                     <div
                         className={hourClassName}
                         key={j}
-                        onClick={() => selectHour(i, j)}
+                        onClick={() => !disabled && selectHour(i, j)}
                     >
                         <p>{CONVERT[j]}</p>
                         <span>

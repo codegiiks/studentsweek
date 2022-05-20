@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         switch (req.method) {
             case 'POST':
                 let errors;
-                if ((errors = validate(req.body, SCHEMA).errors))
+                if ((errors = validate(req.body, SCHEMA).errors).length > 0)
                     throw errors[0];
 
                 const data = await subCourse(
@@ -45,6 +45,8 @@ export default async function handler(req, res) {
         }
     } catch (e) {
         console.log(e);
-        return res.status(e.statusCode || 500).end(e?.message || e);
+        return res
+            .status(e?.statusCode || 500)
+            .end(e?.message || e || 'Qualcosa è andato storto');
     }
 }
