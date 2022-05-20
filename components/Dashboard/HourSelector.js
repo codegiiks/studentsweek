@@ -21,8 +21,6 @@ export function HourSelector({
     className,
     ...props
 }) {
-    const getCodeString = (d, h) => `${d}-${h}`;
-
     const selectHour = (d, h) => select(id, [[d, h]]);
 
     const renderHours = (i) =>

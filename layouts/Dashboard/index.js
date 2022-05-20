@@ -74,6 +74,7 @@ export default function DashboardLayout({ children }) {
                 info,
                 logout,
                 userInfo,
+                fetchUserInfo,
             });
         }
         return child;

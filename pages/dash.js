@@ -26,7 +26,13 @@ export function CoursesList({ openSelector, data, info }) {
     );
 }
 
-export default function Dashboard({ session, info, logout, userInfo }) {
+export default function Dashboard({
+    session,
+    info,
+    logout,
+    userInfo,
+    fetchUserInfo,
+}) {
     const [isSelectorVisible, setIsSelectorVisible] = useState(false);
     const [subs, setSubs] = useState({});
 
@@ -34,6 +40,7 @@ export default function Dashboard({ session, info, logout, userInfo }) {
 
     const closeSelector = () => {
         setIsSelectorVisible(false);
+        fetchUserInfo();
         fetchSubs();
     };
 
