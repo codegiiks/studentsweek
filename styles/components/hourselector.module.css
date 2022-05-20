@@ -1,13 +1,17 @@
-.wrapper {
+.hoursWrapper {
     @apply flex w-full border-[1px] border-warmGray-200 rounded-md;
 
     .hour {
-        @apply flex flex-col h-20 hover:bg-warmGray-50 flex-1 items-center justify-center text-center;
+        @apply flex flex-col items-center justify-center flex-1 h-20 text-center hover:bg-warmGray-50;
         @apply font-sans border-l-[1px] border-warmGray-200;
         @apply cursor-pointer;
 
         &.disabled {
             @apply bg-warmGray-100 cursor-not-allowed;
+        }
+
+        &.selected {
+            @apply bg-blue-500;
         }
 
         p {
@@ -26,5 +30,21 @@
         &:last-child {
             border-radius: 0 0.375rem 0.375rem 0;
         }
+    }
+}
+
+.dayName {
+    @apply w-full mt-2 text-warmGray-400;
+
+    &:first-child {
+        @apply mt-0;
+    }
+}
+
+.wrapper {
+    @apply w-full;
+
+    .submit {
+        @apply w-full px-2 py-1 bg-blue-500 mt-5 rounded-md text-white font-semibold hover:bg-blue-600;
     }
 }

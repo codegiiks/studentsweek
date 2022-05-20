@@ -19,55 +19,57 @@ export function CoursesTable({ data, select }) {
     );
 }
 
-export function SelectCoursePopup({ data, visible, close }) {
-    const [selectedCourses, setSelectedCourses] = useState(null);
+export function SelectCoursePopup({
+    user,
+    userInfo,
+    visible,
+    closeCallback,
+    info,
+}) {
+    const [filtered, setFiltered] = useState(null);
     const [selected, setSelected] = useState(null);
-    const [userAvail, setUserAvail] = useState(null);
-    const [query, setQuery] = useState('');
     const courses = useRef(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            const fetchedData = await axios
-                .get('/api/courses', {
-                    params: data,
-                })
-                .then((r) => r.data)
-                .catch((e) => message.error(e?.response?.data));
-
-            courses.current = fetchedData.courses;
-            console.log(fetchedData);
-            setSelectedCourses(fetchedData.courses);
-            setUserAvail(fetchedData.userRule);
-        };
-
-        setSelectedCourses(null);
-        if (visible) fetchData();
-    }, [data]);
-
-    useEffect(() => {
-        const search = async (q) => {
-            const Fuse = (await import('fuse.js')).default;
-            const fuse = new Fuse(courses.current, {
-                keys: ['name', 'emoji', 'desc'],
-                findAllMatches: true,
+            const { data, error } = await axios.get('/api/courses', {
+                params: {
+                    user,
+                },
             });
-            setSelectedCourses(fuse.search(q).map((v) => v.item));
+            if (error)
+                return message.error(
+                    error?.response?.data || 'Qualcosa è andato storto'
+                );
+
+            courses.current = data;
+            setFiltered(data);
         };
 
-        if (query == '' || !query) return setSelectedCourses(courses.current);
+        setFiltered(null);
+        if (visible) fetchData();
+    }, [visible, user]);
+
+    const search = async (q) => {
+        if (q == '' || !q) return setFiltered(courses.current);
         if (!courses.current) return;
 
-        search(query);
-    }, [query]);
+        const Fuse = (await import('fuse.js')).default;
+        const fuse = new Fuse(courses.current, {
+            keys: ['name', 'emoji', 'desc'],
+            findAllMatches: true,
+        });
+        setFiltered(fuse.search(q).map((v) => v.item));
+    };
 
-    const subToCourse = async (hour) => {
+    // check later
+    const subToCourse = async (course, plan) => {
         try {
             const fetchedData = await axios
                 .post('/api/sub', {
-                    ...data,
-                    hour,
-                    course: selected.id,
+                    user,
+                    course,
+                    plan,
                 })
                 .then((r) => r.data);
 
@@ -79,7 +81,7 @@ export function SelectCoursePopup({ data, visible, close }) {
         }
 
         setSelected(null);
-        setSelectedCourses(null);
+        setFiltered(null);
         close();
     };
 
@@ -94,8 +96,10 @@ export function SelectCoursePopup({ data, visible, close }) {
                     </p>
                     <HourSelector
                         select={subToCourse}
-                        rules={selected.rules[data.day] & userAvail}
+                        course={selected}
+                        userRules={userInfo.rules}
                         className={style.hourSelector}
+                        info={info}
                     />
                 </>
             );
@@ -110,8 +114,7 @@ export function SelectCoursePopup({ data, visible, close }) {
                         <input
                             type="string"
                             placeholder="Cerca un corso..."
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
+                            onChange={(e) => search(e.target.value)}
                         />
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -129,10 +132,7 @@ export function SelectCoursePopup({ data, visible, close }) {
                         </svg>
                     </div>
                     <div className={style.coursesWrapper}>
-                        <CoursesTable
-                            data={selectedCourses}
-                            select={setSelected}
-                        />
+                        <CoursesTable data={filtered} select={setSelected} />
                     </div>
                 </>
             );
@@ -143,8 +143,8 @@ export function SelectCoursePopup({ data, visible, close }) {
             <div
                 className={style.closer}
                 onClick={() => {
-                    close();
-                    setSelectedCourses(null);
+                    closeCallback();
+                    setFiltered(null);
                     setSelected(null);
                 }}
             />

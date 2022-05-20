@@ -66,6 +66,7 @@ export default function Dashboard({ session, info, logout, userInfo }) {
                 user={getAccessToken(session)}
                 userInfo={userInfo}
                 closeCallback={closeSelector}
+                info={info}
             />
             <main className={style.spacer}>
                 <div className={style.wrapper}>

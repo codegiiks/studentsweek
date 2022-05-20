@@ -1,8 +1,6 @@
-import { Loader } from 'components';
 import style from 'styles/components/hourselector.module.css';
-import { getByHoursDiff } from 'lib/utils';
-
-const N_OF_HOURS = process.env.NEXT_PUBLIC_N_OF_HOURS;
+import { checkHourByRule, getByHoursDiff, getDayName } from 'lib/utils';
+import { Fragment } from 'react';
 
 const CONVERT = [
     'Prima',
@@ -15,38 +13,72 @@ const CONVERT = [
     'Ottava',
 ];
 
-export function HourSelector({ select, rules, className }) {
-    const hourBoxes = [];
-    console.log(rules);
+export function HourSelector({
+    select,
+    userRules,
+    course: { id, unit, rules },
+    info,
+    className,
+    ...props
+}) {
+    const getCodeString = (d, h) => `${d}-${h}`;
 
-    let currentRule = rules;
+    const selectHour = (d, h) => select(id, [[d, h]]);
 
-    for (let i = N_OF_HOURS - 1; i >= 0; i--) {
-        let disabled = true;
-        if (currentRule - Math.pow(2, i) >= 0) {
-            currentRule = currentRule - Math.pow(2, i);
-            disabled = false;
-        }
+    const renderHours = (i) =>
+        Array.from({ length: info.N_OF_HOURS }).map((h, j) => {
+            const hourClassName = [
+                style.hour,
+                !checkHourByRule(rules[i] & userRules[i], j)
+                    ? style.disabled
+                    : null,
+            ].join(' ');
 
-        hourBoxes.unshift(
-            <div
-                key={i}
-                className={[style.hour, disabled ? style.disabled : null].join(
-                    ' '
-                )}
-                onClick={disabled ? null : () => select(i)}
-            >
-                <p>{CONVERT[i]}</p>
-                <span>
-                    {getByHoursDiff(i)}-{getByHoursDiff(i + 1)}
-                </span>
-            </div>
-        );
-    }
+            if (
+                j % unit == 0 &&
+                j + 1 <= parseInt(info.N_OF_HOURS / unit) * unit
+            )
+                return (
+                    <div
+                        className={hourClassName}
+                        key={j}
+                        onClick={() => selectHour(i, j)}
+                    >
+                        <p>{CONVERT[j]}</p>
+                        <span>
+                            {getByHoursDiff(j)}/{getByHoursDiff(j + unit)}
+                        </span>
+                    </div>
+                );
+            else if (j + 1 > parseInt(info.N_OF_HOURS / unit) * unit)
+                return (
+                    <div
+                        className={hourClassName}
+                        key={j}
+                        onClick={() => selectHour(i, j)}
+                    >
+                        <p>{CONVERT[j]}</p>
+                        <span>
+                            {getByHoursDiff(j)}/{getByHoursDiff(j + 1)}
+                        </span>
+                    </div>
+                );
+        });
 
-    return rules ? (
-        <div className={[style.wrapper, className].join(' ')}>{hourBoxes}</div>
-    ) : (
-        <Loader space />
+    return (
+        <div className={[style.wrapper, className].join(' ')} {...props}>
+            {Array.from({ length: info.N_OF_DAYS }).map((v, i) =>
+                (userRules[i] & rules[i]) != 0 ? (
+                    <Fragment key={i}>
+                        <p className={style.dayName}>
+                            {getDayName(i, info.DAY_OF_START)}
+                        </p>
+                        <div className={style.hoursWrapper}>
+                            {renderHours(i)}
+                        </div>
+                    </Fragment>
+                ) : null
+            )}
+        </div>
     );
 }
