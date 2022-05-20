@@ -82,7 +82,7 @@ export function SelectCoursePopup({
 
         setSelected(null);
         setFiltered(null);
-        close();
+        closeCallback();
     };
 
     const getPopupContent = () => {
