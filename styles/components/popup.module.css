@@ -7,7 +7,7 @@
 
     .popup {
         @apply bg-white rounded-md overflow-auto;
-        @apply p-4 w-full sm:w-11/12 sm:max-w-[500px] max-h-[500px];
+        @apply p-4 w-full sm:w-11/12 sm:max-w-[var(--popup-width)] max-h-[var(--popup-height)];
     }
 
     .closer {

@@ -29,6 +29,8 @@ html {
     --navbar-size: calc(5rem);
     --loader-color: lightgray;
     --loader-speed: 0.4s;
+    --popup-height: 500px;
+    --popup-width: 500px;
 
     @media screen and (min-width: 1024px) {
         --navbar-size: calc(7rem);
