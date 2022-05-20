@@ -20,6 +20,7 @@
         "@supabase/supabase-js": "^1.35.3",
         "axios": "^0.27.2",
         "fuse.js": "^6.6.2",
+        "jotai": "^1.6.7",
         "jsonschema": "^1.4.1",
         "next": "12.1.5",
         "react": "18.0.0",
