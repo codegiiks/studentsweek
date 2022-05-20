@@ -12,3 +12,5 @@ export { TableEditor } from './Admin/TableEditor';
 export { CreatePopup } from './Admin/CreatePopup';
 export { HourSelector } from './Dashboard/HourSelector';
 export { Popup } from './Popup';
+export { InputElement } from './InputElement';
+export { Option } from './Admin/Option';
