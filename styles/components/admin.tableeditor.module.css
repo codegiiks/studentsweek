@@ -32,7 +32,11 @@
             @apply flex justify-center items-center;
 
             & > * {
-                @apply flex-1;
+                @apply flex-[3];
+
+                &.buttonCell {
+                    @apply flex-1;
+                }
             }
         }
 
@@ -61,27 +65,8 @@
         .row {
             @apply bg-warmGray-50 h-12;
 
-            & > div {
-                @apply border-[1px] border-warmGray-200;
-                @apply px-3 py-1 h-full relative;
-                @apply overflow-hidden;
-
-                &.editing {
-                    overflow: unset;
-
-                    input,
-                    textarea {
-                        @apply h-20 w-full shadow-sm;
-                        @apply bg-warmGray-50 p-1;
-                        @apply relative z-50;
-                        @apply border-2 border-warmGray-200 rounded-md;
-                        transform: scale(1.1);
-                    }
-
-                    textarea {
-                        @apply h-40;
-                    }
-                }
+            textarea {
+                @apply bg-transparent px-2;
             }
         }
     }
