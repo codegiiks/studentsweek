@@ -69,7 +69,12 @@ export default function DashboardLayout({ children }) {
 
     const childrenWithProps = React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
-            return React.cloneElement(child, { session, info, logout });
+            return React.cloneElement(child, {
+                session,
+                info,
+                logout,
+                userInfo,
+            });
         }
         return child;
     });

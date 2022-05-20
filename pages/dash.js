@@ -30,20 +30,17 @@ export function CoursesList({ openSelector, data, info }) {
     );
 }
 
-export default function Dashboard({ session, info, logout }) {
-    const [selectorData, setSelectorData] = useState(null);
+export default function Dashboard({ session, info, logout, userInfo }) {
+    const [isSelectorVisible, setIsSelectorVisible] = useState(false);
     const [subs, setSubs] = useState({});
+
     const getDayName = (i) =>
         DAY_NAMES[(new Date(info.DAY_OF_START).getDay() + i - 1) % 7];
 
-    const openSelector = (i) =>
-        setSelectorData({
-            day: i,
-            user: getAccessToken(session),
-        });
+    const openSelector = () => setIsSelectorVisible(true);
 
     const closeSelector = () => {
-        setSelectorData(null);
+        setIsSelectorVisible(false);
         fetchSubs();
     };
 
@@ -72,9 +69,10 @@ export default function Dashboard({ session, info, logout }) {
     return info && session ? (
         <>
             <SelectCoursePopup
-                visible={selectorData != null}
-                data={selectorData}
-                close={closeSelector}
+                visible={isSelectorVisible}
+                user={getAccessToken(session)}
+                userInfo={userInfo}
+                closeCallback={closeSelector}
             />
             <main className={style.spacer}>
                 <div className={style.wrapper}>
@@ -104,10 +102,9 @@ export default function Dashboard({ session, info, logout }) {
                     <p className={style.intro}>{info.INTRO_DESC}</p>
                     {Array.from({ length: info.N_OF_DAYS }).map((v, i) => (
                         <Fragment key={i}>
-                            {console.log(i, subs[i])}
                             <h3>{getDayName(i)}</h3>
                             <CoursesList
-                                openSelector={() => openSelector(i)}
+                                openSelector={openSelector}
                                 data={subs[i]}
                                 info={info}
                             />
