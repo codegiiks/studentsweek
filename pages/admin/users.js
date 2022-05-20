@@ -27,9 +27,12 @@ const SCHEMA = {
             label: 'Propic',
         },
         role: {
-            type: 'string',
+            type: 'enum',
             label: 'Ruolo',
-            enum: ['Admin', 'Student'],
+            enumOptions: {
+                admin: 'Amminsitratore',
+                student: 'Studente',
+            },
         },
     },
 };
@@ -47,22 +50,39 @@ export default function AdminPanel() {
         };
 
         fetchUsers().then((d) => setUsers(d));
-    });
+    }, []);
+
+    const updateUser = async (index, newData) => {
+        message.loading('Caricando...', 4000).then(async ({ destory }) => {
+            const { data, error } = await supabase
+                .from('users')
+                .update(newData)
+                .match({
+                    email: users[index].email,
+                });
+
+            if (error) {
+                destory();
+                return message.error(error.message);
+            }
+
+            users[index] = {
+                ...users[index],
+                ...newData,
+            };
+            setUsers(users);
+
+            destory();
+            message.success('Utente modificato con successo');
+        });
+    };
 
     return (
         <div className={style.wrapper}>
             <AdminHeading desc="Qui potrai visualizzare e modificare le informazioni degli utenti iscritti sulla piattaforma">
                 Utenti
             </AdminHeading>
-            <TableEditor
-                data={users}
-                tablename="users"
-                schema={SCHEMA}
-                getId={(data) => ({
-                    email: data.email,
-                })}
-                finder={(v, i, match) => v.email == match.email}
-            />
+            <TableEditor data={users} schema={SCHEMA} update={updateUser} />
         </div>
     );
 }

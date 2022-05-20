@@ -15,26 +15,17 @@ const SCHEMA = {
             label: 'Nome',
             minLength: 3,
         },
-        org: {
-            type: 'string',
-            label: 'Organizzatore',
-            render: (v) => v.org.name,
-            options: {
-                readOnly: true,
-            },
-        },
         desc: {
             type: 'string',
             label: 'Descrizione',
-            as: 'textarea',
         },
         limit: {
             type: 'number',
             label: 'Limite',
-            minimum: 1,
+            min: 1,
         },
         room: {
-            type: 'number',
+            type: 'string',
             label: 'Aula',
         },
     },
@@ -48,13 +39,38 @@ export default function CoursesPanel() {
         const fetchCourses = async () => {
             const { data, error } = await supabase
                 .from('courses')
-                .select('name, org ( name ), desc, limit, emoji, room, id');
+                .select('name, desc, limit, emoji, room, id');
             if (error) throw message.error(error.message);
             return data;
         };
 
         fetchCourses().then((d) => setCourses(d));
-    });
+    }, []);
+
+    const updateCourse = async (index, newData) => {
+        message.loading('Caricando...', 4000).then(async ({ destory }) => {
+            const { data, error } = await supabase
+                .from('courses')
+                .update(newData)
+                .match({
+                    id: courses[index].id,
+                });
+
+            if (error) {
+                destory();
+                return message.error(error.message);
+            }
+
+            courses[index] = {
+                ...courses[index],
+                ...newData,
+            };
+            setCourses(courses);
+
+            destory();
+            message.success('Corso modificato con successo');
+        });
+    };
 
     return (
         <div>
@@ -67,20 +83,31 @@ export default function CoursesPanel() {
             />
             <TableEditor
                 data={courses}
-                tablename="courses"
                 schema={SCHEMA}
-                getId={(data) => ({
-                    id: data.id,
-                })}
-                finder={(v, i, match) => v.id == match.id}
-                buttons={() => (
-                    <button
-                        className="button"
-                        onClick={() => setVisiblePopup(!visiblePopup)}
-                    >
-                        Nuovo Corso
-                    </button>
-                )}
+                update={updateCourse}
+                buttons={[
+                    {
+                        label: 'Edit',
+                        render: () => (
+                            <div onClick={() => console.log('caio')}>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                    />
+                                </svg>
+                            </div>
+                        ),
+                    },
+                ]}
             />
         </div>
     );
