@@ -27,19 +27,21 @@ export function HourSelector({
 
     const renderHours = (i) =>
         Array.from({ length: info.N_OF_HOURS }).map((h, j) => {
-            const disabled = !checkHourByRule(rules[i] & userRules[i], j, unit);
-            const hourClassName = [
-                style.hour,
-                disabled ? style.disabled : null,
-            ].join(' ');
+            const hourClassName = [style.hour];
 
             if (
                 j % unit == 0 &&
                 j + 1 <= parseInt(info.N_OF_HOURS / unit) * unit
-            )
+            ) {
+                const disabled = !checkHourByRule(
+                    rules[i] & userRules[i],
+                    j,
+                    unit
+                );
+                hourClassName.push(disabled ? style.disabled : null);
                 return (
                     <div
-                        className={hourClassName}
+                        className={hourClassName.join(' ')}
                         key={j}
                         onClick={() => !disabled && selectHour(i, j)}
                     >
@@ -49,10 +51,16 @@ export function HourSelector({
                         </span>
                     </div>
                 );
-            else if (j + 1 > parseInt(info.N_OF_HOURS / unit) * unit)
+            } else if (j + 1 > parseInt(info.N_OF_HOURS / unit) * unit) {
+                const disabled = !checkHourByRule(
+                    rules[i] & userRules[i],
+                    j,
+                    1
+                );
+                hourClassName.push(disabled ? style.disabled : null);
                 return (
                     <div
-                        className={hourClassName}
+                        className={hourClassName.join(' ')}
                         key={j}
                         onClick={() => !disabled && selectHour(i, j)}
                     >
@@ -62,6 +70,7 @@ export function HourSelector({
                         </span>
                     </div>
                 );
+            }
         });
 
     return (
