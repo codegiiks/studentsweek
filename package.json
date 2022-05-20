@@ -23,6 +23,7 @@
         "jotai": "^1.6.7",
         "jsonschema": "^1.4.1",
         "next": "12.1.5",
+        "qrcode.react": "^3.0.2",
         "react": "18.0.0",
         "react-dom": "18.0.0",
         "react-message-popup": "^1.0.0-alpha.2"
