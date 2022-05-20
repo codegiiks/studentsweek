@@ -14,7 +14,7 @@
         }
 
         .coursesWrapper {
-            @apply overflow-auto w-full;
+            @apply overflow-auto w-full flex flex-col gap-3 mt-3;
             max-height: 500px;
         }
 
@@ -42,7 +42,7 @@
         }
 
         .courseTile {
-            @apply cursor-pointer hover:bg-warmGray-50 hover:bg-opacity-50 my-3;
+            @apply cursor-pointer hover:bg-warmGray-50 hover:bg-opacity-50;
         }
     }
 

@@ -8,6 +8,16 @@
     .popup {
         @apply bg-white rounded-md overflow-auto;
         @apply p-4 w-full sm:w-11/12 sm:max-w-[var(--popup-width)] max-h-[var(--popup-height)];
+
+        h4,
+        h3,
+        h2 {
+            @apply font-sans font-bold text-2xl sm:text-3xl;
+        }
+
+        p {
+            @apply opacity-60 font-thin;
+        }
     }
 
     .closer {

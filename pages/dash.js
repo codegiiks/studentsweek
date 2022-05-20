@@ -10,7 +10,8 @@ import {
 import DashboardLayout from 'layouts/Dashboard';
 
 import style from 'styles/pages/dash.module.css';
-import { CourseTile, NoCard, SelectCoursePopup } from 'components';
+import { Popup, CourseTile, NoCard, SelectCoursePopup } from 'components';
+import { QRCodeSVG } from 'qrcode.react';
 
 export function CoursesList({ openSelector, data, info }) {
     return (
@@ -34,6 +35,7 @@ export default function Dashboard({
     fetchUserInfo,
 }) {
     const [isSelectorVisible, setIsSelectorVisible] = useState(false);
+    const [qrPopup, setQrPopup] = useState(false);
     const [subs, setSubs] = useState({});
 
     const openSelector = () => setIsSelectorVisible(true);
@@ -75,12 +77,28 @@ export default function Dashboard({
                 closeCallback={closeSelector}
                 info={info}
             />
+            <Popup
+                visible={qrPopup}
+                close={() => setQrPopup(false)}
+                style={{
+                    '--popup-width': 'min-content',
+                }}
+            >
+                <h4 className="text-center mb-3">Il tuo codice</h4>
+                {session?.user?.email && (
+                    <QRCodeSVG
+                        value={session?.user?.email}
+                        className={style.qr}
+                    />
+                )}
+            </Popup>
             <main className={style.spacer}>
                 <div className={style.wrapper}>
                     <h2>
                         <img
                             className={style.propic}
                             src={getPropic(session)}
+                            onClick={() => setQrPopup(true)}
                         />
                         Hey {getFullName(session)}{' '}
                         <button onClick={logout} className={style.logoutButton}>

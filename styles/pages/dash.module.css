@@ -42,3 +42,7 @@
 .courseTile {
     @apply mt-3;
 }
+
+.qr {
+    @apply w-44 h-44 mx-auto mb-3;
+}
