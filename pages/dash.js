@@ -1,20 +1,16 @@
 import supabase from 'lib/supabase';
 import { Fragment, useEffect, useState } from 'react';
-import { getAccessToken, getEmail, getFullName, getPropic } from 'lib/utils';
+import {
+    getDayName,
+    getAccessToken,
+    getEmail,
+    getFullName,
+    getPropic,
+} from 'lib/utils';
 import DashboardLayout from 'layouts/Dashboard';
 
 import style from 'styles/pages/dash.module.css';
 import { CourseTile, NoCard, SelectCoursePopup } from 'components';
-
-const DAY_NAMES = [
-    'Lunedì',
-    'Martedì',
-    'Mercoledì',
-    'Giovedì',
-    'Venerdì',
-    'Sabato',
-    'Domenica',
-];
 
 export function CoursesList({ openSelector, data, info }) {
     return (
@@ -33,9 +29,6 @@ export function CoursesList({ openSelector, data, info }) {
 export default function Dashboard({ session, info, logout, userInfo }) {
     const [isSelectorVisible, setIsSelectorVisible] = useState(false);
     const [subs, setSubs] = useState({});
-
-    const getDayName = (i) =>
-        DAY_NAMES[(new Date(info.DAY_OF_START).getDay() + i - 1) % 7];
 
     const openSelector = () => setIsSelectorVisible(true);
 
@@ -102,7 +95,7 @@ export default function Dashboard({ session, info, logout, userInfo }) {
                     <p className={style.intro}>{info.INTRO_DESC}</p>
                     {Array.from({ length: info.N_OF_DAYS }).map((v, i) => (
                         <Fragment key={i}>
-                            <h3>{getDayName(i)}</h3>
+                            <h3>{getDayName(i, info.DAY_OF_START)}</h3>
                             <CoursesList
                                 openSelector={openSelector}
                                 data={subs[i]}
