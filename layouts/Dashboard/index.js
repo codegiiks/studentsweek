@@ -99,12 +99,6 @@ export default function DashboardLayout({ children }) {
                     <title>StudentsWeek - Dashboard</title>
                 </Head>
                 <Suspense fallback={() => <h2>Waiting</h2>}>
-                    <IntroPopup
-                        visible={userInfo == 'notGiven'}
-                        close={(data) => setUserInfo(data)}
-                        classes={info?.CLASSES}
-                        session={session}
-                    />
                     {childrenWithProps}
                 </Suspense>
                 <style jsx global>{`
