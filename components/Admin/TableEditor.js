@@ -47,7 +47,11 @@ function TableHeading({ properties, buttons }) {
 }
 
 function SaveStatus({ saving }) {
-    return <div>{saving ? 'Salvataggio...' : 'Salvato'}</div>;
+    return (
+        <p className="mt-2 text-warmGray-400">
+            {saving ? 'Salvataggio...' : 'Aggiornato'}
+        </p>
+    );
 }
 
 export function TableEditor({
@@ -83,7 +87,6 @@ export function TableEditor({
 
     return (
         <>
-            <SaveStatus saving={requestTimeout !== null} />
             <div className={style.tableWrapper}>
                 <div className={[style.table, className].join(' ')} {...props}>
                     <TableHeading
@@ -103,6 +106,7 @@ export function TableEditor({
                     ))}
                 </div>
             </div>
+            <SaveStatus saving={requestTimeout !== null} />
         </>
     );
 }
