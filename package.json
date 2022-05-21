@@ -19,6 +19,7 @@
         "@jsonforms/vanilla-renderers": "^2.5.2",
         "@supabase/supabase-js": "^1.35.3",
         "axios": "^0.27.2",
+        "frappe-charts": "^1.6.2",
         "fuse.js": "^6.6.2",
         "jotai": "^1.6.7",
         "jsonschema": "^1.4.1",
