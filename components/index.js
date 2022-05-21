@@ -14,3 +14,5 @@ export { HourSelector } from './Dashboard/HourSelector';
 export { Popup } from './Popup';
 export { InputElement } from './InputElement';
 export { Option } from './Admin/Option';
+export { OrganiserDashboard } from './Dashboard/OrganiserDashboard';
+export { SearchBox } from './Admin/SearchBox';

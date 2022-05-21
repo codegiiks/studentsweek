@@ -1,2 +1,5 @@
 .wrapper {
+    .topButtons {
+        @apply flex my-2;
+    }
 }
