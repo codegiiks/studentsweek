@@ -45,3 +45,17 @@ input:focus {
 .button {
     @apply flex justify-center items-center px-2 py-1 bg-blue-500 border-2 border-blue-400 text-white font-sans font-semibold rounded-md;
 }
+
+.classic-rounded {
+    @apply flex items-center justify-center h-10 px-3 border-sky-400 border-2 rounded-lg text-sm text-sky-400;
+    @apply font-bold font-sans active:-mb-[2px];
+    box-shadow: 0 2px 0 #39bcfa;
+
+    &:active {
+        box-shadow: unset;
+    }
+
+    svg {
+        @apply w-4 h-4;
+    }
+}

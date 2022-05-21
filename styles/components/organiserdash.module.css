@@ -1,0 +1,54 @@
+.wrapper {
+    @apply mt-5;
+
+    .notStarted {
+        @apply flex w-full items-center justify-center my-10 text-warmGray-500;
+    }
+
+    .presences {
+        @apply flex flex-col w-full;
+
+        .topButtons {
+            @apply flex px-2 gap-2 items-center mb-2;
+
+            .desc {
+                @apply text-warmGray-300;
+            }
+
+            button:nth-child(2) {
+                @apply ml-auto;
+            }
+        }
+
+        .row {
+            @apply flex w-full p-3 gap-3 text-lg text-center items-center;
+            @apply border-2 border-warmGray-100 border-t-0;
+
+            &:nth-child(3) {
+                @apply rounded-t-lg border-t-2;
+            }
+
+            &:last-child {
+                @apply rounded-b-lg;
+            }
+
+            p {
+                @apply font-sans font-semibold;
+            }
+            .class {
+                @apply uppercase text-warmGray-500;
+            }
+
+            .button {
+                @apply ml-auto p-1 bg-laurel-400 rounded-lg text-white stroke-current text-opacity-80;
+                @apply border-2 border-laurel-500;
+                box-shadow: 0 2px 0 #069e00;
+
+                &.absent {
+                    @apply bg-red-500 border-red-600;
+                    box-shadow: 0 2px 0 #db2626;
+                }
+            }
+        }
+    }
+}

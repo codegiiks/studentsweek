@@ -10,7 +10,13 @@ import {
 import DashboardLayout from 'layouts/Dashboard';
 
 import style from 'styles/pages/dash.module.css';
-import { Popup, CourseTile, NoCard, SelectCoursePopup } from 'components';
+import {
+    Popup,
+    CourseTile,
+    NoCard,
+    SelectCoursePopup,
+    OrganiserDashboard,
+} from 'components';
 import { QRCodeSVG } from 'qrcode.react';
 
 export function CoursesList({ openSelector, data, info }) {
@@ -119,16 +125,24 @@ export default function Dashboard({
                         </button>
                     </h2>
                     <p className={style.intro}>{info.INTRO_DESC}</p>
-                    {Array.from({ length: info.N_OF_DAYS }).map((v, i) => (
-                        <Fragment key={i}>
-                            <h3>{getDayName(i, info.DAY_OF_START)}</h3>
-                            <CoursesList
-                                openSelector={openSelector}
-                                data={subs[i]}
-                                info={info}
-                            />
-                        </Fragment>
-                    ))}
+                    {userInfo?.role != 'org' ? (
+                        Array.from({ length: info.N_OF_DAYS }).map((v, i) => (
+                            <Fragment key={i}>
+                                <h3>{getDayName(i, info.DAY_OF_START)}</h3>
+                                <CoursesList
+                                    openSelector={openSelector}
+                                    data={subs[i]}
+                                    info={info}
+                                />
+                            </Fragment>
+                        ))
+                    ) : (
+                        <OrganiserDashboard
+                            className={style.organiserDashboard}
+                            user={userInfo}
+                            info={info}
+                        />
+                    )}
                 </div>
             </main>
         </>

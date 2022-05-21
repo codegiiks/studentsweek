@@ -2,7 +2,7 @@ import style from 'styles/components/hourselector.module.css';
 import { checkHourByRule, getByHoursDiff, getDayName } from 'lib/utils';
 import { Fragment } from 'react';
 
-const CONVERT = [
+export const CONVERT = [
     'Prima',
     'Seconda',
     'Terza',
