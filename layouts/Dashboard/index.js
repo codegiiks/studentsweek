@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }) {
     const [error, setError] = useState(null);
 
     const checkSession = (s) => {
-        if (!s) setSession(null);
+        if (!s) return setSession(null);
         const email = getEmail(s);
 
         if (/^(.*)@liceoischia.edu.it$/gi.exec(email)) setSession(s);
