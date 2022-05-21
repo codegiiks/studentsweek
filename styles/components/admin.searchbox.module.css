@@ -1,0 +1,15 @@
+.searchBox {
+    @apply flex bg-warmGray-100 w-min ml-auto;
+    @apply items-center justify-center;
+    @apply border-[1px] border-warmGray-200 rounded-md;
+    @apply px-2 py-1;
+
+    .searchInput {
+        @apply bg-transparent leading-3;
+    }
+
+    .searchIcon {
+        @apply w-4 h-4;
+        @apply text-warmGray-400;
+    }
+}
