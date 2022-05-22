@@ -69,25 +69,26 @@ export function SelectCoursePopup({
 
     // check later
     const subToCourse = async (course, plan) => {
-        try {
-            const fetchedData = await axios
+        message.loading('Caricando...', 10000).then(async ({ destory }) => {
+            const res = await axios
                 .post('/api/sub', {
                     user,
                     course,
                     plan,
                 })
-                .then((r) => r.data);
+                .then((r) => {
+                    destory();
+                    message.success(r.data);
+                })
+                .catch((e) => {
+                    destory();
+                    message.error(e.response.data);
+                });
 
-            if (!fetchedData) return;
-
-            message.success(fetchedData);
-        } catch (e) {
-            message.error(e.response.data);
-        }
-
-        setSelected(null);
-        setFiltered(null);
-        closeCallback();
+            setSelected(null);
+            setFiltered(null);
+            closeCallback();
+        });
     };
 
     const getPopupContent = () => {
