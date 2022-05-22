@@ -4,6 +4,7 @@ import { hoursPacksAtom } from 'lib/atoms';
 import { checkHourByRule, getByHoursDiff, getDayName } from 'lib/utils';
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
+import { Loader } from 'components/Loader';
 
 export function HoursPackSelector({ select, course, userRules, info }) {
     const [hoursPacks, setHoursPacks] = useAtom(hoursPacksAtom);
@@ -53,7 +54,7 @@ export function HoursPackSelector({ select, course, userRules, info }) {
         <div className={style.wrapper}>
             <p className={style.desc}>Pacchetti Ore</p>
             <div className={style.cardsWrapper}>
-                {courseHoursPacks &&
+                {courseHoursPacks ? (
                     Object.values(courseHoursPacks).map(
                         ({ id, name, value }) => {
                             const disabled = !value.every(([d, h]) =>
@@ -97,7 +98,10 @@ export function HoursPackSelector({ select, course, userRules, info }) {
                                 </div>
                             );
                         }
-                    )}
+                    )
+                ) : (
+                    <Loader space />
+                )}
             </div>
         </div>
     );
