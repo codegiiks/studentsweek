@@ -5,21 +5,32 @@
     z-index: 9999;
 
     .logo {
-        @apply mr-auto w-auto h-12;
-        @apply cursor-pointer;
+        @apply mr-auto flex gap-2 items-center select-none;
+
+        svg {
+            @apply w-auto h-12;
+        }
+
+        h1 {
+            @apply font-medium text-2xl;
+        }
     }
 
     .links {
-        @apply flex gap-6 items-center;
+        @apply flex gap-6 items-center font-medium;
 
         .link {
-            @apply font-semibold text-black hidden lg:block opacity-90 hover:opacity-100;
+            @apply text-black hidden lg:block opacity-90 hover:opacity-100;
         }
 
         .loginButton {
-            @apply text-laurel-400 font-sans font-bold;
-            @apply hover:text-laurel-500;
-            @apply px-5 py-1;
+            @apply px-2 py-1 rounded-lg text-laurel-400 border-2 border-laurel-400;
+            box-shadow: 0 2px 0 #0dc700;
+
+            &:active {
+                @apply mt-[2px];
+                box-shadow: unset;
+            }
         }
     }
 }

@@ -1,25 +1,18 @@
 import { Link } from './Link';
-import LongLogo from 'assets/LongLogo';
+import Logo from 'assets/Logo';
 
 import style from 'styles/components/navbar.module.css';
 
-const NAVBAR_LINKS = [
-    {
-        title: 'Contattaci',
-        href: '#contact',
-        scrollTo: true,
-    },
-    {
-        title: 'Chi siamo',
-        href: '#about',
-        scrollTo: true,
-    },
-];
+const NAVBAR_LINKS = [];
 
 export function Navbar({ className }) {
     return (
         <nav className={[style.wrapper, className].join(' ')}>
-            <LongLogo className={style.logo} />
+            <div className={style.logo}>
+                <Logo />
+                <h1>StudentsWeek</h1>
+            </div>
+
             <div className={style.links}>
                 {NAVBAR_LINKS.map((v, i) => (
                     <Link key={i} href={v.href} {...v} className={style.link}>
@@ -27,7 +20,7 @@ export function Navbar({ className }) {
                     </Link>
                 ))}
                 <Link href="/login" as="button" className={style.loginButton}>
-                    Login
+                    Accedi
                 </Link>
             </div>
         </nav>

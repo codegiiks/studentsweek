@@ -3,29 +3,32 @@
     @apply flex px-10 lg:px-28;
 
     .left {
-        @apply text-2xl sm:text-5xl w-5/6 font-black top-[15vh] sm:top-[25vh] absolute;
-        .heroType {
-            @apply uppercase;
-        }
         h3 {
+            @apply text-3xl sm:text-5xl w-5/6 top-[25vh] absolute font-semibold font-sans;
+
             .buttonsWrapper {
                 @apply flex flex-row gap-10 mt-5;
+
                 span {
-                    @apply font-semibold text-white text-xl sm:text-4xl  bg-laurel-400 font-sans normal-case;
+                    @apply font-semibold text-white text-base sm:text-2xl font-sans normal-case tracking-normal;
                     @apply block;
                     @apply cursor-pointer;
-                    @apply w-max px-5 py-2 rounded-md shadow-md;
+                    @apply w-max px-5 py-2 rounded-lg;
+                    @apply bg-laurel-400 border-2 border-laurel-500 select-none;
+                    box-shadow: 0 2px 0 #0b9d06;
 
-                    &:last-child {
-                        @apply bg-white text-laurel-400 hover:bg-laurel-400 hover:text-white transition-all ease-linear;
+                    &:active {
+                        @apply mt-[2px];
+                        box-shadow: unset;
                     }
                 }
             }
         }
     }
 }
+
 .heroPic {
     background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771')
         no-repeat center center / cover;
-    @apply w-[100vw] h-[50vh] sm:h-[50vh] absolute bottom-0 z-[-1] left-0;
+    @apply w-[100vw] h-[50vh] sm:h-[40vh] absolute bottom-0 z-[-1] left-0;
 }

@@ -1,3 +1,3 @@
 .navbar {
-    @apply pt-16 px-10 lg:px-28;
+    @apply pt-10 px-10 lg:px-28;
 }

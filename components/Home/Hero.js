@@ -1,3 +1,4 @@
+import { Link } from 'components/Link';
 import style from 'styles/components/hero.module.css';
 
 export function Hero() {
@@ -9,7 +10,9 @@ export function Hero() {
                     settimana dello studente <br />
                     con un semplice click!
                     <div className={style.buttonsWrapper}>
-                        <span>Provalo Ora</span>
+                        <Link href="/login">
+                            <span>Accedi</span>
+                        </Link>
                     </div>
                 </h3>
             </div>
