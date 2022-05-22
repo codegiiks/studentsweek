@@ -13,13 +13,13 @@
         @apply flex gap-6 items-center;
 
         .link {
-            @apply font-semibold text-white hidden lg:block opacity-90 hover:opacity-100;
+            @apply font-semibold text-black hidden lg:block opacity-90 hover:opacity-100;
         }
 
         .loginButton {
-            @apply bg-laurel-400 text-white md:bg-white md:text-laurel-600;
-            @apply hover:bg-laurel md:hover:bg-warmGray-100;
-            @apply px-5 py-1 rounded-full;
+            @apply text-laurel-400 font-sans font-bold;
+            @apply hover:text-laurel-500;
+            @apply px-5 py-1;
         }
     }
 }
