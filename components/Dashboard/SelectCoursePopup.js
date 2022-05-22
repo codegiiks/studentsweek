@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { Loader, HourSelector, CourseTile } from 'components';
+import {
+    Loader,
+    HourSelector,
+    HoursPackSelector,
+    CourseTile,
+} from 'components';
 import { useEffect, useState, useRef } from 'react';
 import { message } from 'react-message-popup';
 import style from 'styles/components/selectcoursepopup.module.css';
@@ -94,13 +99,23 @@ export function SelectCoursePopup({
                         {selected.desc +
                             ". Scegli l'ora in cui vuoi praticare il corso"}
                     </p>
-                    <HourSelector
-                        select={subToCourse}
-                        course={selected}
-                        userRules={userInfo.rules}
-                        className={style.hourSelector}
-                        info={info}
-                    />
+                    {selected.accepts === 1 ? (
+                        <HoursPackSelector
+                            select={subToCourse}
+                            course={selected}
+                            userRules={userInfo.rules}
+                            className={style.hoursPackSelector}
+                            info={info}
+                        />
+                    ) : (
+                        <HourSelector
+                            select={subToCourse}
+                            course={selected}
+                            userRules={userInfo.rules}
+                            className={style.hourSelector}
+                            info={info}
+                        />
+                    )}
                 </>
             );
         else

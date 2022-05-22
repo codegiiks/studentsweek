@@ -1,0 +1,36 @@
+.wrapper {
+    @apply mt-2;
+    .desc {
+        @apply text-warmGray-400;
+    }
+
+    .cardsWrapper {
+        @apply flex overflow-auto w-full gap-3;
+
+        .card {
+            @apply shrink-0;
+            @apply h-36 w-56;
+            @apply border-[1px] border-warmGray-200 rounded-lg py-2 px-3;
+            @apply cursor-pointer;
+            @apply flex flex-col;
+
+            .name {
+                @apply text-lg font-semibold;
+            }
+
+            .specs {
+                @apply mt-auto;
+                @apply overflow-auto h-full;
+                @apply opacity-30 text-sm;
+            }
+
+            &.disabled {
+                @apply bg-warmGray-100 cursor-not-allowed;
+
+                .name {
+                    @apply text-warmGray-500;
+                }
+            }
+        }
+    }
+}

@@ -8,16 +8,23 @@ const SCHEMA = {
             type: 'string',
         },
         plan: {
-            type: 'array',
-            contains: {
-                type: 'array',
-                contains: {
-                    type: 'integer',
+            anyOf: [
+                {
+                    type: 'array',
+                    contains: {
+                        type: 'array',
+                        contains: {
+                            type: 'integer',
+                        },
+                        minItems: 2,
+                        maxItems: 2,
+                    },
+                    uniqueItems: true,
                 },
-                minItems: 2,
-                maxItems: 2,
-            },
-            uniqueItems: true,
+                {
+                    type: 'string',
+                },
+            ],
         },
         user: {
             type: 'string',
