@@ -79,7 +79,7 @@ export function HoursPackSelector({ select, course, userRules, info }) {
                                         {value.map(([d, h], i) => (
                                             <p key={i}>
                                                 {getDayName(
-                                                    d + 1,
+                                                    d,
                                                     info.HOUR_OF_START
                                                 )}{' '}
                                                 -{' '}
