@@ -3,23 +3,29 @@
     @apply flex px-10 lg:px-28;
 
     .left {
-        @apply text-5xl w-full md:w-2/3 lg:w-1/2;
-        @apply flex items-center;
-
+        @apply text-2xl sm:text-5xl w-5/6 font-black top-[15vh] sm:top-[25vh] absolute;
+        .heroType {
+            @apply uppercase;
+        }
         h3 {
-            span {
-                @apply font-semibold text-laurel text-4xl tracking-wide;
-                @apply block;
-                @apply cursor-pointer;
-                @apply hover:border-b-2 hover:-mb-[2px] border-laurel-400;
-                @apply w-max;
+            .buttonsWrapper {
+                @apply flex flex-row gap-10 mt-5;
+                span {
+                    @apply font-semibold text-white text-xl sm:text-4xl  bg-laurel-400 font-sans normal-case;
+                    @apply block;
+                    @apply cursor-pointer;
+                    @apply w-max px-5 py-2 rounded-md shadow-md;
+
+                    &:last-child {
+                        @apply bg-white text-laurel-400 hover:bg-laurel-400 hover:text-white transition-all ease-linear;
+                    }
+                }
             }
         }
     }
-
-    .artwork {
-        @apply absolute -right-full md:-right-[230px] lg:right-0 top-0 bottom-0;
-        pointer-events: none;
-        z-index: -1;
-    }
+}
+.heroPic {
+    background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771')
+        no-repeat center center / cover;
+    @apply w-[100vw] h-[50vh] sm:h-[50vh] absolute bottom-0 z-[-1] left-0;
 }
