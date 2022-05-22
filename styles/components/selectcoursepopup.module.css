@@ -7,19 +7,21 @@
 
     .popup {
         @apply bg-white rounded-md overflow-auto;
-        @apply p-4 w-full sm:w-11/12 sm:max-w-[500px] max-h-[500px];
+        @apply p-4 w-full sm:w-11/12 sm:max-w-[500px] max-h-[550px];
 
         .hourSelector {
             @apply mt-5;
         }
 
         .coursesWrapper {
-            @apply overflow-auto w-full flex flex-col gap-3 mt-3;
-            max-height: 500px;
+            @apply w-full flex flex-col gap-3 mt-3;
         }
 
         h4 {
-            @apply font-sans font-bold text-2xl sm:text-3xl;
+            @apply font-sans font-bold text-2xl sm:text-3xl flex items-center gap-1;
+            svg {
+                @apply cursor-pointer;
+            }
         }
 
         .desc {
