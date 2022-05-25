@@ -48,6 +48,9 @@ export default function Dashboard({
 
     const closeSelector = () => {
         setIsSelectorVisible(false);
+    };
+
+    const refreshSubs = () => {
         fetchUserInfo();
         fetchSubs();
     };
@@ -81,6 +84,7 @@ export default function Dashboard({
                 user={getAccessToken(session)}
                 userInfo={userInfo}
                 closeCallback={closeSelector}
+                refreshCallback={refreshSubs}
                 info={info}
             />
             <Popup

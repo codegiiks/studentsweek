@@ -29,6 +29,7 @@ export function SelectCoursePopup({
     userInfo,
     visible,
     closeCallback,
+    refreshCallback,
     info,
 }) {
     const [filtered, setFiltered] = useState(null);
@@ -69,6 +70,9 @@ export function SelectCoursePopup({
 
     // check later
     const subToCourse = async (course, plan) => {
+        closeCallback();
+        setSelected(null);
+        setFiltered(null);
         message.loading('Caricando...', 10000).then(async ({ destory }) => {
             const res = await axios
                 .post('/api/sub', {
@@ -85,9 +89,7 @@ export function SelectCoursePopup({
                     message.error(e.response.data);
                 });
 
-            setSelected(null);
-            setFiltered(null);
-            closeCallback();
+            refreshCallback();
         });
     };
 
