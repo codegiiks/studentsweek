@@ -63,10 +63,20 @@
         }
 
         .row {
-            @apply bg-warmGray-50 h-12;
+            @apply bg-warmGray-50 h-12 px-2 gap-2;
+            @apply border-x-[1px] border-b-[1px] border-warmGray-200;
 
-            textarea {
-                @apply bg-transparent px-2;
+            &:last-child {
+                @apply rounded-b-lg;
+            }
+
+            &:nth-child(odd) {
+                @apply bg-white;
+            }
+
+            input {
+                @apply bg-transparent h-12;
+                min-width: 0px;
             }
         }
     }
