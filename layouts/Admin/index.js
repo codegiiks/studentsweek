@@ -6,6 +6,7 @@ import { message } from 'react-message-popup';
 import style from 'styles/layouts/admin.index.module.css';
 import { ErrorPage, Link, Loader } from 'components';
 import { getEmail } from 'lib/utils';
+import { useRouter } from 'next/router';
 
 const SIDEBAR_LINKS = [
     {
@@ -96,12 +97,17 @@ const SIDEBAR_LINKS = [
 ];
 
 export function Sidebar({}) {
+    const router = useRouter();
+
     return (
         <div className={style.sidebar}>
             {SIDEBAR_LINKS.map((v, i) => (
                 <Link
                     href={v.href}
-                    className={style.sidebarLink}
+                    className={[
+                        style.sidebarLink,
+                        v.href == router.pathname ? style.active : '',
+                    ].join(' ')}
                     key={i}
                     as="div"
                 >
