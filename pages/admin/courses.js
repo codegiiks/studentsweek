@@ -1,7 +1,8 @@
 import supabase from 'lib/supabase';
 import { useState, useEffect } from 'react';
-import { CreatePopup, TableEditor, AdminHeading } from 'components';
+import { TableEditor, AdminHeading } from 'components';
 import { AdminLayout } from 'layouts/Admin';
+import style from 'styles/pages/admin.courses.module.css';
 
 const SCHEMA = {
     type: 'object',
@@ -77,10 +78,9 @@ export default function CoursesPanel() {
             <AdminHeading desc="Qui potrai creare e modificare i corsi inseriti nella piattaforma">
                 Corsi
             </AdminHeading>
-            <CreatePopup
-                visible={visiblePopup}
-                close={() => setVisiblePopup(false)}
-            />
+            <div className={style.topButtons}>
+                <div className="button limit">Crea</div>
+            </div>
             <TableEditor
                 data={courses}
                 schema={SCHEMA}
@@ -89,7 +89,10 @@ export default function CoursesPanel() {
                     {
                         label: 'Edit',
                         render: () => (
-                            <div onClick={() => console.log('caio')}>
+                            <div
+                                onClick={() => console.log('caio')}
+                                className="button"
+                            >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="h-6 w-6"

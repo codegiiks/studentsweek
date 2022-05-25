@@ -106,6 +106,7 @@ export function Sidebar({}) {
                     href={v.href}
                     className={[
                         style.sidebarLink,
+                        'button',
                         v.href == router.pathname ? style.active : '',
                     ].join(' ')}
                     key={i}

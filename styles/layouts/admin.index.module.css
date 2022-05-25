@@ -1,20 +1,20 @@
 .adminLayout {
-    @apply flex h-[calc(100%-1.75em)] gap-3;
+    @apply flex h-[calc(100%-1.75em)];
 
     .sidebar {
-        @apply flex flex-col py-5 px-2 gap-2;
+        @apply flex flex-col py-5 px-3 gap-2;
         @apply border-r-2 border-warmGray-100;
         @apply bg-warmGray-50;
 
         .sidebarLink {
-            @apply bg-white;
             @apply flex sm:gap-5 items-center justify-center sm:justify-start;
-            @apply border-[1px] border-warmGray-200 rounded-md shadow-sm;
-            @apply px-5 py-1;
-            @apply opacity-70 hover:opacity-100;
+            --b-h: 116;
+            --b-s: 100%;
+            --b-l: 39%;
 
             &.active {
-                @apply bg-laurel-400 opacity-100 text-white;
+                --b-l: 34%;
+                @apply opacity-100;
             }
 
             .name {
@@ -24,6 +24,7 @@
     }
 
     .content {
-        @apply flex-1 py-5 ml-2 mr-4;
+        @apply flex-1 py-5 mx-4 relative;
+        @apply w-[calc(100vw-42px-3.5rem)] sm:w-[calc(100vw-161px-3.5rem)];
     }
 }
