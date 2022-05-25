@@ -31,6 +31,9 @@ html {
     --loader-speed: 0.4s;
     --popup-height: 500px;
     --popup-width: 500px;
+    --b-h: 203;
+    --b-s: 100%;
+    --b-l: 50%;
 
     @media screen and (min-width: 1024px) {
         --navbar-size: calc(7rem);
@@ -43,7 +46,25 @@ input:focus {
 
 /* Utils */
 .button {
-    @apply flex justify-center items-center px-2 py-1 bg-blue-500 border-2 border-blue-400 text-white font-sans font-semibold rounded-md;
+    @apply flex justify-center items-center px-2 py-1 text-white font-sans font-semibold rounded-md;
+
+    .svg {
+        @apply gap-2;
+    }
+
+    border: 1px solid hsl(var(--b-h), var(--b-s), calc(var(--b-l) - 10%));
+    background: hsl(var(--b-h), var(--b-s), var(--b-l));
+    box-shadow: 0 2px 0 hsl(var(--b-h), var(--b-s), calc(var(--b-l) - 10%));
+    @apply cursor-pointer;
+
+    &.limit {
+        @apply w-20;
+    }
+
+    &:active {
+        @apply mt-[1px] border-b-0;
+        box-shadow: unset;
+    }
 }
 
 .classic-rounded {
