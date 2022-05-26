@@ -3,7 +3,7 @@ import { Auth } from '../auth';
 import supabase from 'lib/supabase';
 import Head from 'next/head';
 import { message } from 'react-message-popup';
-import { ErrorPage, IntroPopup, Loader } from 'components';
+import { ErrorPage, GoogleAnalytics, Loader } from 'components';
 
 import 'styles/layouts/dashboard.index.module.css';
 import { getEmail } from 'lib/utils';
@@ -97,6 +97,7 @@ export default function DashboardLayout({ children }) {
             <>
                 <Head>
                     <title>StudentsWeek - Dashboard</title>
+                    <GoogleAnalytics />
                 </Head>
                 <Suspense fallback={() => <h2>Waiting</h2>}>
                     {childrenWithProps}

@@ -40,7 +40,6 @@ export default class CustomDocument extends Document {
                     <meta name="application-name" content="StudentsWeek" />
                     <meta name="msapplication-TileColor" content="#069e00" />
                     <meta name="theme-color" content="#069e00" />
-                    <title>StudentsWeek</title>
                     <link
                         href="https://fonts.googleapis.com/css2?family=Nunito:wght@100;200;300;400;500;600;700&display=swap"
                         rel="stylesheet"
