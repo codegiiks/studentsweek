@@ -17,4 +17,3 @@ export { Option } from './Admin/Option';
 export { OrganiserDashboard } from './Dashboard/OrganiserDashboard';
 export { SearchBox } from './Admin/SearchBox';
 export { HoursPackSelector } from './Dashboard/HoursPackSelector';
-export { GoogleAnalytics } from './GoogleAnalytics';
