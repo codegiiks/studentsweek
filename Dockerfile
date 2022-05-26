@@ -1,4 +1,4 @@
-FROM node:lts-bullseye-slim
+FROM node:current
 
 COPY package.json /tmp/package.json
 RUN cd /tmp && npm install
