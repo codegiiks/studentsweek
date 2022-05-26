@@ -8,5 +8,3 @@ WORKDIR /opt/app
 COPY . /opt/app
 
 EXPOSE 3000
-
-RUN npm install
