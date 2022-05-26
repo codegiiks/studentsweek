@@ -7,6 +7,7 @@ import {
 } from 'components';
 import { useEffect, useState, useRef } from 'react';
 import { message } from 'react-message-popup';
+import * as ga from 'lib/ga';
 import style from 'styles/components/selectcoursepopup.module.css';
 
 export function CoursesTable({ data, select }) {
@@ -55,6 +56,16 @@ export function SelectCoursePopup({
         setFiltered(null);
         if (visible) fetchData();
     }, [visible, user]);
+
+    useEffect(() => {
+        if (selected)
+            ga.event({
+                action: 'view_course',
+                params: {
+                    course_id: selected.id,
+                },
+            });
+    }, [selected]);
 
     const search = async (q) => {
         if (q == '' || !q) return setFiltered(courses.current);
