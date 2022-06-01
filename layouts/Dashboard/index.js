@@ -50,11 +50,14 @@ export default function DashboardLayout({ children }) {
 
     const fetchUserInfo = async () => {
         const { data } = await supabase
-            .from('users')
-            .select()
-            .eq('email', session?.user?.email);
+            .rpc('get_user_info', {
+                useremail: session?.user?.email,
+            })
+            .limit(1)
+            .single();
 
-        if (data?.length == 1) setUserInfo(data[0]);
+        console.log('userInfo', data);
+        if (data) setUserInfo(data);
         else setUserInfo('notGiven');
     };
 
@@ -64,6 +67,7 @@ export default function DashboardLayout({ children }) {
     }, [session]);
 
     const logout = () => {
+        setUserInfo(null);
         supabase.auth.signOut();
     };
 
@@ -81,6 +85,17 @@ export default function DashboardLayout({ children }) {
     });
 
     if (session == 'init') return <Loader />;
+    else if (userInfo == 'notGiven')
+        return (
+            <ErrorPage
+                error={{
+                    code: 400,
+                    message:
+                        'Sembra che tu non possa accedere alla settimana dello studente. Se credi ci sia un errore, contatta il tuo rappresentante',
+                }}
+                logout={logout}
+            />
+        );
     else if (session == 'notAllowed')
         return (
             <ErrorPage
