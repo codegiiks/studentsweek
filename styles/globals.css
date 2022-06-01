@@ -44,6 +44,12 @@ input:focus {
     outline: none;
 }
 
+.boxed {
+    border: 1px solid hsl(var(--b-h), var(--b-s), calc(var(--b-l) - 10%));
+    background: hsl(var(--b-h), var(--b-s), var(--b-l));
+    box-shadow: 0 2px 0 hsl(var(--b-h), var(--b-s), calc(var(--b-l) - 10%));
+}
+
 /* Utils */
 .button {
     @apply flex justify-center items-center px-2 py-1 text-white font-sans font-semibold rounded-md;
